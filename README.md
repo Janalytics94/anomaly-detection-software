@@ -13,3 +13,7 @@ Master Thesis Repo WiWi Fakultät HU und FOKUS Fraunhofer
 
 ### Anomaly Detection
 - [AnomalyDetection](anomalydetection/README.md)
+
+
+# TODO
+Dockerfiles necessary? 

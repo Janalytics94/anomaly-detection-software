@@ -18,12 +18,12 @@
 # include <openssl/opensslconf.h>
 
 # if !defined(OPENSSL_SYS_UEFI)
-#  include "crypto/bn_conf.h"
+#  include "include/crypto/bn_conf.h"
 # endif
 
-# include "crypto/bn.h"
-# include "internal/cryptlib.h"
-# include "internal/numbers.h"
+# include "include/crypto/bn.h"
+# include "include/internal/cryptlib.h"
+# include "include/internal/numbers.h"
 
 /*
  * These preprocessor symbols control various aspects of the bignum headers
