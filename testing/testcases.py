@@ -6,6 +6,6 @@
 import ctypes
 
 # call c function
-fun = ctypes.CDLL("openssl/bn_sqrt.c")
+fun = ctypes.CDLL("c_func.so")
 
-print(fun)
+print(fun.square(10))
