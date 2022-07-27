@@ -15,7 +15,7 @@
 
 # include <openssl/e_os2.h>
 # include <openssl/crypto.h>
-# include "nelem.h"
+# include "internal/nelem.h"
 
 /*
  * <openssl/e_os2.h> contains what we can justify to make visible to the

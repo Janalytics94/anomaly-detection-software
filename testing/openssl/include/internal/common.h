@@ -14,8 +14,8 @@
 # include <stdlib.h>
 # include <string.h>
 
-# include "e_os.h" /* ossl_inline in many files */
-# include "nelem.h"
+# include "internal/e_os.h" /* ossl_inline in many files */
+# include "internal/nelem.h"
 
 #ifdef NDEBUG
 # define ossl_assert(x) ((x) != 0)

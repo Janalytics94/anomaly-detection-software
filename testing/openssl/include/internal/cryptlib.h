@@ -18,7 +18,7 @@
 #  define BIO_FLAGS_UPLINK_INTERNAL 0
 # endif
 
-# include "common.h"
+# include "internal/common.h"
 
 # include <openssl/crypto.h>
 # include <openssl/buffer.h>
