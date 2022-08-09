@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 
+import sys
 import pandas as pd
+sys.path.append('.')
 from src.ingest.data_loader import DataLoader
 
 
