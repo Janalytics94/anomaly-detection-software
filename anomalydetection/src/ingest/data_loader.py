@@ -7,6 +7,7 @@ import glob
 class DataLoader():
     """
     Recieves data paths for heartbleed bug scenario.
+    
     """
 
     def __init__(self) -> None:
