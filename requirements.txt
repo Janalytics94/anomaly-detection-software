@@ -1,2 +1,4 @@
 clize
 pandas
+git+https://github.co/LID-DS/LID-DS.git
+pypcapkit
