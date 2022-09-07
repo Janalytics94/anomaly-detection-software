@@ -56,10 +56,10 @@ def load(src, target, type_of_data):
     storage_written_l.append(resource_stats.storage_written())
 
 
-  resources = { "name_of_recodring": recordings[0].name,
+  resources = { "name_of_recording": recordings[0].name,
     "timestamp": timestamps_l, "cpu_usage": cpu_usage_l,
     "memory_usage": memory_usage_l, "network_received": network_received_l,
-    "netword_send": network_send_l, 
+    "network_send": network_send_l, 
     "storage_read": storage_read_l, "storage_written": storage_written_l
   }
   
