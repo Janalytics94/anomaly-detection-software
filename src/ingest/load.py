@@ -1,15 +1,17 @@
-
+#!/usr/bin/env python
 from dataloader.dataloader_factory import dataloader_factory
 import pandas as pd
 from clize import run
 
+
+#TODO: Check validation data
 def load(src, target, type_of_data):
 
-  """
-  Function to load .res files from the scenario CVE-2014-0160
+  """ /Users/janavihs/projects/anomaly-detection-software/data/LID-DS-2021/CVE-2020-23839
+  Function to load .res files from the scenario CVE-2020-23839
 
   Parameters:
-  src (str): path to data 
+  src (str): path to data scenario: currently : CVE-2020-23839
   type_of_data (str): train, test or validation data files
 
   Returns:
@@ -24,8 +26,6 @@ def load(src, target, type_of_data):
     "validation": dataloader.validation_data()
     }
 
-  
-  container_names_l = []
   # necessary features from the .res file 
   timestamps_l = []
   cpu_usage_l = []
@@ -45,18 +45,18 @@ def load(src, target, type_of_data):
     recordings = raw["validation"]
   
 
-  #for i in range(0,len(recordings)):
-  for resource_stats in recordings[0].resource_stats():
-    timestamps_l.append(resource_stats.timestamp_datetime())
-    cpu_usage_l.append(resource_stats.cpu_usage())
-    memory_usage_l.append(resource_stats.memory_usage())
-    network_received_l.append(resource_stats.network_received())
-    network_send_l.append(resource_stats.network_send())
-    storage_read_l.append(resource_stats.storage_read())
-    storage_written_l.append(resource_stats.storage_written())
+  for i in range(0,len(recordings)):
+    for resource_stats in recordings[i].resource_stats():
+      timestamps_l.append(resource_stats.timestamp_datetime())
+      cpu_usage_l.append(resource_stats.cpu_usage())
+      memory_usage_l.append(resource_stats.memory_usage())
+      network_received_l.append(resource_stats.network_received())
+      network_send_l.append(resource_stats.network_send())
+      storage_read_l.append(resource_stats.storage_read())
+      storage_written_l.append(resource_stats.storage_written())
 
 
-  resources = { "name_of_recording": recordings[0].name,
+  resources = { 
     "timestamp": timestamps_l, "cpu_usage": cpu_usage_l,
     "memory_usage": memory_usage_l, "network_received": network_received_l,
     "network_send": network_send_l, 
@@ -64,9 +64,10 @@ def load(src, target, type_of_data):
   }
   
   resources = pd.DataFrame(resources)
-  resources.to_pickle(target + 'test.pkl')
+  resources.to_pickle(target + '/'+ type_of_data + '.pkl')
+  
   return resources
-load(src="data/LIDS/CVE-2014-0160/raw", target="data/LIDS/CVE-2014-0160/interim/", type_of_data="train")
 
-#if __name__ == '__main__':
- # run(load)
+
+if __name__ == '__main__':
+ run(load)
