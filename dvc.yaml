@@ -1,1 +1,12 @@
-#stages
+stages:
+  load:
+    cmd: 
+      - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim train
+      - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim test
+      - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim validation
+    deps: 
+     -  data/LID-DS-2021/CVE-2020-2383
+    outs:
+      - data/interim/train.pkl
+      - data/interim/test.pkl
+      - data/interim/validation.pkl

@@ -3,11 +3,9 @@ from dataloader.dataloader_factory import dataloader_factory
 import pandas as pd
 from clize import run
 
-
-#TODO: Check validation data
 def load(src, target, type_of_data):
 
-  """ /Users/janavihs/projects/anomaly-detection-software/data/LID-DS-2021/CVE-2020-23839
+  """
   Function to load .res files from the scenario CVE-2020-23839
 
   Parameters:
@@ -17,7 +15,6 @@ def load(src, target, type_of_data):
   Returns:
   pd.Dataframe for each recording
   """
-
   # iterate the data
   dataloader = dataloader_factory(src)
   raw = {
@@ -41,7 +38,7 @@ def load(src, target, type_of_data):
   if type_of_data == "test":
     recordings = raw["test"]
 
-  if type_of_data == "valdidation":
+  if type_of_data == "validation":
     recordings = raw["validation"]
   
 
