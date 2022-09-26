@@ -1,3 +1,4 @@
 .vscode
 data
 LID-DS
+src/ingest/__pycache__/
