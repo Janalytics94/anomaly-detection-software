@@ -1,83 +1,52 @@
-# Imports 
+#!/usr/bin/env python 
 from sklearn import preprocessing
 import numpy as np
+import pandas as pd
+from clize import run
 
-class Tranformer():
-    """
-    Different methods to normalize Data
-    """
 
-    def __init__(self) -> None:
-        pass
+def scale(src, method, type_of_data, target):
+    """
+    Standard: Scaled data has zero mean and unit variance 
+
+    Params:
+        - methods : standard, min_max, max_abs, power
+        - x : columns that should be scaled in df.
+
+    Returns:
+        - x_scaled : scaled value according to chosen method
     
-    def standard(self, x):
-        """
-        Scaled data has zero mean and unit variance 
+    """
+    df = pd.read_pickle(src)
+    columns = df.columns.tolist()
+    df_scaled = df.copy()
+    
 
-        Params:
-
-        Returns:
-        
-        """
-
+    if method == "standard":
         scaler = preprocessing.StandardScaler()
-        x_scaled = scaler.fit_transform(x)
+        df_scaled[columns] = scaler.fit_transform(df_scaled[columns])
 
-        return x_scaled
+    if method == "min_max":
+        scaler = preprocessing.MinMaxScaler()
+        df_scaled[columns] = scaler.fit_transform(df_scaled[columns])
 
-    def min_max(self, x):
-        """
-        Scaling features between a given minimum and a maximum value
+    if method == "max_abs":
+        scaler = preprocessing.MaxAbsScaler()
+        df_scaled[columns] = scaler.fit_transform(df_scaled[columns])
 
-        Params:
-
-        Returns:
-        
-        """
-
-        min_max_scaler = preprocessing.MinMaxScaler()
-        x_min_max = min_max_scaler.fit_transform(x)
-
-        return x_min_max
+    if method == "power": # default is Yeo-Johnson, Box-Cox Tranformation is not applicable 
+        scaler = preprocessing.PowerTransformer(method="yeo-johnson", standardize=False)
+        df_scaled[columns] = scaler.fit_transform(df_scaled[columns])
     
-    def max_abs(self, x):
-        """
-        Divides through the largest maximum value in each feature. Meant for data that is already centered at zero or sparse data
+    df_scaled(target + '/'+ type_of_data + '.pkl')
+    return df_scaled
 
-        Params:
-
-        Returns:
-        
-        """
-
-        max_abs_scaler = preprocessing.MaxAbsScaler()
-        x_max_abs = max_abs_scaler.fit_transform(x)
-
-        return x_max_abs
+if __name__ == '__main__':
+ run(scale)
 
     
-    def power(self, x, method):
-        """
-        Maps to a Gaussian Distribution, in order to minimize skewness and stabilize variance
-
-        - Yeo-Johnson transformation
-        - Box-Cox transformation (strictly positive data)
-
-        Params:
-
-        Returns:
-        """
-
-        if method == "box-cox":
-            pt = preprocessing.PowerTransformer(method=method, standardize=False)
-        
-        if method == "yeo-johnson":
-            pt = preprocessing.PowerTransformer(method=method, standardize=False)
-
-        x_new = pt.fit_transform(x)
-
-        return x_new
-
+    
+    
 
     
 
