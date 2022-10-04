@@ -10,3 +10,8 @@ stages:
       - data/interim/train.pkl
       - data/interim/test.pkl
       - data/interim/validation.pkl
+  
+  transform:
+    cmd: 
+      - ./src/ingest/transform.py data/interim/raw/train.pkl standard train data/interim/scaled
+      - ./src/ingest/transform.py data/interim/raw/test.pkl standard test data/interim/scaled
