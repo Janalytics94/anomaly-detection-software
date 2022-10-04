@@ -1,0 +1,26 @@
+schema: '2.0'
+stages:
+  transform:
+    cmd:
+    - ./src/ingest/transform.py data/interim/raw/train.pkl standard train data/interim/scaled
+    - ./src/ingest/transform.py data/interim/raw/test.pkl standard test data/interim/scaled
+  load:
+    cmd:
+    - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim train
+    - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim test
+    - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim validation
+    deps:
+    - path: data/LID-DS-2021/CVE-2020-23839
+      md5: 626faacf7b1ad598285f9f483c93993e.dir
+      size: 1511395144
+      nfiles: 1149
+    outs:
+    - path: data/interim/test.pkl
+      md5: aae4e4fd6dc66fac670bbf4dae7e8e29
+      size: 2237050
+    - path: data/interim/train.pkl
+      md5: 40d3e33c583b2670a23b17afac2c5fe0
+      size: 536722
+    - path: data/interim/validation.pkl
+      md5: b79f45a058aa2a8a6156e4b20f178807
+      size: 146888
