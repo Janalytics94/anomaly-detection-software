@@ -24,7 +24,7 @@ def scale(src, method, type_of_data, target):
     df = df.set_index("timestamp")
 
     columns = df.columns.tolist()
-    columns = [column for column in columns if column not in ("dates", "times")]
+    columns = [column for column in columns if column not in ("dates", "times", "container_name")]
     df_scaled = df.copy()
 
     if method == "standard":

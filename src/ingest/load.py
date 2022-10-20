@@ -12,7 +12,7 @@ def load(src, target, type_of_data):
 
     Parameters:
     src (str): path to data scenario: currently : CVE-2020-23839
-    type_of_data (str): train, test or validation data files
+    type_of_data (str): resources, test or validation data files
 
     Returns:
     pd.Dataframe for each recording
@@ -57,6 +57,23 @@ def load(src, target, type_of_data):
 
     resources = pd.DataFrame(meta)
     resources = resources.transpose()
+    resources = resources.explode(resources.columns.tolist())
+    # get container names
+    resources["container_name"] = resources.index
+    # split timestamp 
+    resources["dates"] = resources["timestamp"].dt.date
+    resources["times"] = resources["timestamp"].dt.time
+    
+    #len(resources.timestamp.unique()) # all unique so we can use it as index 
+    resources = resources.set_index('timestamp')
+    # make sure eveything has the same dtype
+    resources["cpu_usage"] = resources["cpu_usage"].astype(float)
+    resources["memory_usage"] = resources["memory_usage"].astype(int)
+    resources["network_received"] = resources["network_received"].astype(int)
+    resources["network_send"] = resources["network_send"].astype(int)
+    resources["storage_read"] = resources["storage_read"].astype(int)
+    resources["storage_written"] = resources["storage_written"].astype(int)
+
     resources.to_pickle(target + "/" + type_of_data + ".pkl")
 
     return resources
