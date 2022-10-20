@@ -1,2 +1,2 @@
 IsolationForest:
-  randomstate: 0
+  random_state: 0
