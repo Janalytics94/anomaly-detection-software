@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from re import A
 from dataloader.dataloader_factory import dataloader_factory
 import pandas as pd
 from clize import run
@@ -24,14 +25,8 @@ def load(src, target, type_of_data):
         "validation": dataloader.validation_data(),
     }
 
-    # necessary features from the .res file
-    timestamps_l = []
-    cpu_usage_l = []
-    memory_usage_l = []
-    network_received_l = []
-    network_send_l = []
-    storage_read_l = []
-    storage_written_l = []
+    container_names = []
+    resource_stats_l = []
 
     if type_of_data == "train":
         recordings = raw["train"]
@@ -42,27 +37,26 @@ def load(src, target, type_of_data):
     if type_of_data == "validation":
         recordings = raw["validation"]
 
+    # get meta data 
+    meta = {}
     for i in range(0, len(recordings)):
-        for resource_stats in recordings[i].resource_stats():
-            timestamps_l.append(resource_stats.timestamp_datetime())
-            cpu_usage_l.append(resource_stats.cpu_usage())
-            memory_usage_l.append(resource_stats.memory_usage())
-            network_received_l.append(resource_stats.network_received())
-            network_send_l.append(resource_stats.network_send())
-            storage_read_l.append(resource_stats.storage_read())
-            storage_written_l.append(resource_stats.storage_written())
+        container_names.append(recordings[i].name)
+        resource_stats_l.append(recordings[i].resource_stats())
 
-    resources = {
-        "timestamp": timestamps_l,
-        "cpu_usage": cpu_usage_l,
-        "memory_usage": memory_usage_l,
-        "network_received": network_received_l,
-        "network_send": network_send_l,
-        "storage_read": storage_read_l,
-        "storage_written": storage_written_l,
-    }
+    for h in range(0,len(container_names)):
+        #for q in range(0,len(resource_stats_l[h])):
+        meta[container_names[h]] = {
+                "timestamp": [resource_stats_l[h][q].timestamp_datetime() for q in range(0,len(resource_stats_l[h]))],
+                "cpu_usage": [resource_stats_l[h][q].cpu_usage() for q in range(0,len(resource_stats_l[h]))],
+                "memory_usage": [resource_stats_l[h][q].memory_usage() for q in range(0,len(resource_stats_l[h]))],
+                "network_received": [resource_stats_l[h][q].network_received() for q in range(0,len(resource_stats_l[h]))],
+                "network_send": [resource_stats_l[h][q].network_send() for q in range(0,len(resource_stats_l[h]))],
+                "storage_read": [resource_stats_l[h][q].storage_read() for q in range(0,len(resource_stats_l[h]))],
+                "storage_written": [resource_stats_l[h][q].storage_written() for q in range(0,len(resource_stats_l[h]))],
+        }
 
-    resources = pd.DataFrame(resources)
+    resources = pd.DataFrame(meta)
+    resources = resources.transpose()
     resources.to_pickle(target + "/" + type_of_data + ".pkl")
 
     return resources
