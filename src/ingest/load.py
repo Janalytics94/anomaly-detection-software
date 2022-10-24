@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import joblib
 from dataloader.dataloader_factory import dataloader_factory
 import pandas as pd
 import numpy as np
@@ -56,8 +57,10 @@ def load(src, target, type_of_data):
                 "storage_read": [resource_stats_l[h][q].storage_read() for q in range(0,len(resource_stats_l[h]))],
                 "storage_written": [resource_stats_l[h][q].storage_written() for q in range(0,len(resource_stats_l[h]))],
                 "exploit": np.repeat(jsons[h]['exploit'], len(resource_stats_l[h])),
-                "timestamp_trick_admin":np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][0]['absolute']) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h])),
-                "timestamp_execute_reverse_shell": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][1]['absolute']) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h]))
+                "timestamp_container_ready": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["container_ready"]["absolute"]), len(resource_stats_l[h])),
+                "timestamp_trick_admin":np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][0]["absolute"]) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h])),
+                "timestamp_execute_reverse_shell": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][1]["absolute"]) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h])),
+                "timestamp_warmup_end": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["warmup_end"]["absolute"]), len(resource_stats_l[h])),
         }
     
     resources = pd.DataFrame(resource_stats)
