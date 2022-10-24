@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-from re import A
 from dataloader.dataloader_factory import dataloader_factory
 import pandas as pd
+import numpy as np
+from datetime import datetime
 from clize import run
 
 
 def load(src, target, type_of_data):
-
     """
     Function to load .res files from the scenario CVE-2020-23839
 
@@ -17,6 +17,7 @@ def load(src, target, type_of_data):
     Returns:
     pd.Dataframe for each recording
     """
+    
     # iterate the data
     dataloader = dataloader_factory(src)
     raw = {
@@ -27,6 +28,7 @@ def load(src, target, type_of_data):
 
     container_names = []
     resource_stats_l = []
+    jsons = []
 
     if type_of_data == "train":
         recordings = raw["train"]
@@ -37,15 +39,15 @@ def load(src, target, type_of_data):
     if type_of_data == "validation":
         recordings = raw["validation"]
 
-    # get meta data 
-    meta = {}
+    # get resource_stats 
     for i in range(0, len(recordings)):
         container_names.append(recordings[i].name)
         resource_stats_l.append(recordings[i].resource_stats())
-
+        jsons.append(recordings[i].metadata())
+    
+    resource_stats = {}
     for h in range(0,len(container_names)):
-        #for q in range(0,len(resource_stats_l[h])):
-        meta[container_names[h]] = {
+        resource_stats[container_names[h]] = {
                 "timestamp": [resource_stats_l[h][q].timestamp_datetime() for q in range(0,len(resource_stats_l[h]))],
                 "cpu_usage": [resource_stats_l[h][q].cpu_usage() for q in range(0,len(resource_stats_l[h]))],
                 "memory_usage": [resource_stats_l[h][q].memory_usage() for q in range(0,len(resource_stats_l[h]))],
@@ -53,10 +55,15 @@ def load(src, target, type_of_data):
                 "network_send": [resource_stats_l[h][q].network_send() for q in range(0,len(resource_stats_l[h]))],
                 "storage_read": [resource_stats_l[h][q].storage_read() for q in range(0,len(resource_stats_l[h]))],
                 "storage_written": [resource_stats_l[h][q].storage_written() for q in range(0,len(resource_stats_l[h]))],
+                "exploit": np.repeat(jsons[h]['exploit'], len(resource_stats_l[h])),
+                "timestamp_trick_admin":np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][0]['absolute']) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h])),
+                "timestamp_execute_reverse_shell": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][1]['absolute']) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h]))
         }
-
-    resources = pd.DataFrame(meta)
+    
+    resources = pd.DataFrame(resource_stats)
     resources = resources.transpose()
+    #resources["container_name"] = resources.index
+    #resources.set_index([resources.index]).apply(pd.Series.explode).reset_index()
     resources = resources.explode(resources.columns.tolist())
     # get container names
     resources["container_name"] = resources.index
