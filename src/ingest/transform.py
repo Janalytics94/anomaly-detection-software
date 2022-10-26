@@ -19,12 +19,9 @@ def scale(src, method, type_of_data, target):
 
     """
     df = pd.read_pickle(src)
-    df["dates"] = df["timestamp"].dt.date
-    df["times"] = df["timestamp"].dt.time
-    df = df.set_index("timestamp")
 
     columns = df.columns.tolist()
-    columns = [column for column in columns if column not in ("dates", "times", "container_name")]
+    columns = [column for column in columns if column not in ("dates", "times", "container_name", "exploit", "timestamp_container_ready" , "timestamp_trick_admin" , "timestamp_execute_reverse_shell" , "timestamp_warmup_end")]
     df_scaled = df.copy()
 
     if method == "standard":

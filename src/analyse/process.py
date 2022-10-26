@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import pandas as pd
 
-
+# Functions 
 def calc_time_delta(df) -> pd.DataFrame:
     """
-    Calculates Time Delta between different rows
+    Calculates Time Delta between different rows of Timestamp index 
 
     Params:
     - df: pd.DataFrame as input
@@ -14,13 +14,21 @@ def calc_time_delta(df) -> pd.DataFrame:
     """
     df['tvalue'] = df.index
     df['tdelta'] = (df['tvalue']-df['tvalue'].shift())
+    
 
 
     return df
 
+
 def split_by_container(df) -> list:
     """
-    
+    Creates a dataframe for each container and saves them in a list
+
+    Params:
+    - df: pd.DataFrame as input
+
+    Returns: 
+    - cn_dfs: list with saved df's for each container 
     """
     cn_dfs = []
     container_names = df["container_name"].unique().tolist()

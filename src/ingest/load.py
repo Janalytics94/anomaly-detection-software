@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import joblib
 from dataloader.dataloader_factory import dataloader_factory
 import pandas as pd
 import numpy as np
