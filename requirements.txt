@@ -4,3 +4,8 @@ git+https://github.co/LID-DS/LID-DS.git
 pypcapkit
 statsmodels
 pyod
+eif 
+cython 
+scikit-learn
+scipy
+seaborn

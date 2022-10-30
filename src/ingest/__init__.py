@@ -1,3 +1,3 @@
 """
-ingest module provides methods to load and tranform/preprocess data
+ingest module provides methods to load and transform/preprocess data
 """
