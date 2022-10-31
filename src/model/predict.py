@@ -1,5 +1,3 @@
-
-import pandas as pd 
 import dvc.api
 
 # models of interest 
@@ -20,7 +18,7 @@ def load_model(model_type, X):
     - model: Fitted model
     """
 
-    hyper_params = dvc.api.params_show('/Users/janavihs/projects/anomaly-detection-software/src/model/params.yml')
+    hyper_params = dvc.api.params_show('src/model/params.yml')
     if model_type == 'IsolationForest': 
         hyper_parameter = hyper_params['IsolationForest'] #dictionary of hyper_params 
         model = IsolationForest(**hyper_parameter).fit(X)
