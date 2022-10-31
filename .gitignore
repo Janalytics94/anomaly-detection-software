@@ -1,6 +1,9 @@
 .vscode
 data
+.dvc
+.dvcignore
+dvc.lock
 LID-DS
-src/ingest/__pycache__/
+src/ingest/__pycache__/*
 src/model/__pycache__/
 src/model/.ipynb_checkpoints
