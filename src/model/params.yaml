@@ -9,11 +9,9 @@ IsolationForest:
   verbose: 0
 
 LocalOutlierFactor:
-  n_neighbours:
-  algorithm: 
-  leaf_size:
-  metric:
-  p:
-  contanimation:
-  novelty:
-  n_josb:
+  algorithm: 'auto'
+  leaf_size: 30
+  p: 2
+  contamination: 0.1532595823344213
+  novelty: True
+  n_jobs: -1
