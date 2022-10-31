@@ -7,52 +7,59 @@ from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 
 
-class A_Model():
+def load_model(model_type, X):
     
-    def __init__(self, model_type):
-        self.model_type = model_type # -> think of possible model_types 
-        self.hyper_params = dvc.api.params_show('/Users/janavihs/projects/anomaly-detection-software/src/model/params.yml')
-        
-    def load_model(self):
-        if self.model_type == 'IsolationForest': 
-            hyper_parameter = self.hyper_params['IsolationForest'] #dictionary of hyper_params 
-            model = IsolationForest(hyper_parameter)
-        
-        if self.model_type == 'LocalOutlierFactor':
-            hyper_parameter = self.hyper_params['LocalOutlierFactor']
-            model = LocalOutlierFactor(hyper_parameter)
-        
-        return model
+    """
+    Selects chosen Model, reads in hyperparameters from params.yaml and returns the designated model fitted to data X.
 
-    def fit_(self, model, data):
-        """
-        Returns fitted model 
-        
-        """
-        # Gefittet des model noch abspeichern für Fraunhofer?
-        return model.fit(data)
+    Params:
+    - model_type: Chose a model_type from the following: IsoLationForest, LocalOutlierDetection
+    - X: trainings data
 
-    def predict_(self, model, data):
+    Returns:
+    - model: Fitted model
+    """
 
-        """
-        Predicts if data point is a anomaly, calculates score function and adds it to the dataframe.
+    hyper_params = dvc.api.params_show('/Users/janavihs/projects/anomaly-detection-software/src/model/params.yml')
+    if model_type == 'IsolationForest': 
+        hyper_parameter = hyper_params['IsolationForest'] #dictionary of hyper_params 
+        model = IsolationForest(**hyper_parameter).fit(X)
+    
+    if model_type == 'LocalOutlierFactor':
+        hyper_parameter = hyper_params['LocalOutlierFactor']
+        model = LocalOutlierFactor(**hyper_parameter).fit(X)
+
+    return model
+
+def predict_(model, data):
+
+    """
+    Predicts if data point is a anomaly, calculates score function and adds it to the dataframe.
+
+    Params:
+    - model: fitted model
+    - data: data which the prediction should be made for.
+
+    Returns:
+    - predictions: class predcitions, if data point is anomalous or not (0 = normal / 1 = anomaly)
+    - score: score functions for each data point
+    - data: predicitions and scores added as a column to the dataframe
+
+    """
+
+    predictions = model.predict(data)
+    score = model.decision_function(data)
+    data['anomaly']= predictions
+    data ['score'] = score
+    data['anomaly'] = data['anomaly'].mask(data['anomaly']==1, 0) # one is zero now and represents normal data points
+    data['anomaly'] = data['anomaly'].mask(data['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
+    
+    return predictions, score, data
+
+def evaluate():
 
 
-        """
-
-        predictions = model.predict(data)
-        score = model.decision_function(data)
-        data['anomaly']= predictions
-        data ['score'] = score
-        data['anomaly'] = data['anomaly'].mask(data['anomaly']==1, 0) # one is zero now and represents normal data points
-        data['anomaly'] = data['anomaly'].mask(data['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
-        
-        return predictions, score, data
-
-    def evaluate(self):
-
-
-        return
+    return
 
 
 

@@ -1,7 +1,7 @@
 IsolationForest:
   n_estimators: 100
   max_samples: 'auto'
-  contamination: 0.15
+  contamination: 0.1532595823344213
   max_features: 1.0
   bootstrap: False
   n_jobs: -1 

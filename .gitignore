@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-.vscode/
-data/
-LID-DS/
-=======
 .vscode
 data
 LID-DS
 src/ingest/__pycache__/
-src/analyse/__pycache__/
->>>>>>> testing
+src/model/__pycache__/
+src/model/.ipynb_checkpoints
