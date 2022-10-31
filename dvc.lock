@@ -27,7 +27,7 @@ stages:
     - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw validation
     deps:
     - path: data/LID-DS-2021/CVE-2020-23839
-      md5: 0f08c2819d44db0ddb96dda27c5e6f33.dir
+      md5: f53f4b42e0a72a6cb80497591c3046c7.dir
       size: 1511403340
       nfiles: 1150
     outs:
