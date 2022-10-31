@@ -4,7 +4,6 @@ import dvc.api
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 
-
 def load_model(model_type, X):
     
     """
@@ -18,7 +17,7 @@ def load_model(model_type, X):
     - model: Fitted model
     """
 
-    hyper_params = dvc.api.params_show('src/model/params.yml')
+    hyper_params = dvc.api.params_show('params.yaml')
     if model_type == 'IsolationForest': 
         hyper_parameter = hyper_params['IsolationForest'] #dictionary of hyper_params 
         model = IsolationForest(**hyper_parameter).fit(X)
@@ -44,15 +43,15 @@ def predict_(model, data):
     - data: predicitions and scores added as a column to the dataframe
 
     """
-
-    predictions = model.predict(data)
-    score = model.decision_function(data)
-    data['anomaly']= predictions
-    data ['score'] = score
-    data['anomaly'] = data['anomaly'].mask(data['anomaly']==1, 0) # one is zero now and represents normal data points
-    data['anomaly'] = data['anomaly'].mask(data['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
-    
-    return predictions, score, data
+    data_new = data.copy()
+    predictions = model.predict(data_new)
+    score = model.decision_function(data_new)
+    data_new['anomaly']= predictions
+    data_new['score'] = score
+    data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==1, 0) # one is zero now and represents normal data points
+    data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
+    predictions = data_new['anomaly']
+    return predictions, score, data_new
 
 def evaluate():
 
