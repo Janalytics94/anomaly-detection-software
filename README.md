@@ -1,4 +1,3 @@
-# What is Normal Behaviour?
 # Anomaly Detection for Software Vulnerabilities 
 ## An approach to evaluate a data set if it represents normal behaviour
 

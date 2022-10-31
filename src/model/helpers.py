@@ -2,7 +2,7 @@
 import pandas as pd
 
 # Functions 
-def calc_time_delta(df) -> pd.DataFrame:
+def calc_time_delta(df:pd.DataFrame) -> pd.DataFrame:
     """
     Calculates Time Delta between different rows of Timestamp index 
 
@@ -18,7 +18,7 @@ def calc_time_delta(df) -> pd.DataFrame:
     return df
 
 
-def split_by_container(df) -> list:
+def split_by_container(df:pd.DataFrame) -> list:
     """
     Creates a dataframe for each container and saves them in a list
 
@@ -36,7 +36,7 @@ def split_by_container(df) -> list:
 
     return cn_dfs
 
-def encode(df) -> pd.DataFrame:
+def encode(df:pd.DataFrame) -> pd.DataFrame:
     """
     Encodes column "exploit" of dataframe and encodes true false values to int64
 
@@ -52,7 +52,7 @@ def encode(df) -> pd.DataFrame:
 
     return df
 
-def select_columns_for_modelling(df) -> pd.DataFrame:
+def select_columns_for_modelling(df: pd.DataFrame) -> pd.DataFrame:
 
     """
     Selects only the columns of interest for the model
@@ -69,7 +69,7 @@ def select_columns_for_modelling(df) -> pd.DataFrame:
 
     return df
 
-def create_y_values(df) -> pd.Series:
+def create_y_values(df:pd.DataFrame) -> pd.Series:
     
     """
     Gets the true labels of the data
@@ -87,7 +87,7 @@ def create_y_values(df) -> pd.Series:
 
     return y_true
 
-def calculate_anomalous_rate(df):
+def calculate_anomalous_rate(df:pd.DataFrame) -> float:
 
     """
     Gives percentage of anamoly data
