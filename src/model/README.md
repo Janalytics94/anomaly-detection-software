@@ -1,1 +1,8 @@
-Provide further information über Modeling
+# Models
+
+
+## Isolation Forest 
+
+
+## Local Outlier Factor
+
