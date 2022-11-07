@@ -65,7 +65,7 @@ def select_columns_for_modelling(df: pd.DataFrame) -> pd.DataFrame:
     """
 
 
-    df = df[['cpu_usage','memory_usage', 'network_received','network_send','storage_read','storage_written']]	
+    df = df[['cpu_usage','memory_usage']]#'network_received','network_send','storage_read','storage_written']]	
 
     return df
 

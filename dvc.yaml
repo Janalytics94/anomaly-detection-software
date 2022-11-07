@@ -1,27 +1,26 @@
 stages:
   load:
     cmd: 
-      - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw train
-      - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw test
-      - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw validation
+      - ./src/ingest/load.py data/LID-DS-2021/ data/interim/raw train
+      - ./src/ingest/load.py data/LID-DS-2021/ data/interim/raw test
+      - ./src/ingest/load.py data/LID-DS-2021/ data/interim/raw validation
     deps: 
-     -  data/LID-DS-2021/CVE-2020-23839
+     -  data/LID-DS-2021/
     outs:
-      - data/interim/raw/train.pkl
-      - data/interim/raw/test.pkl
-      - data/interim/raw/validation.pkl
+      - data/interim/raw/
+    
   
-  transform:
-    cmd: 
-      - ./src/ingest/transform.py data/interim/raw/train.pkl standard train data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/test.pkl standard test data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/train.pkl min_max train data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/test.pkl min_max test data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/train.pkl max_abs train data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/test.pkl max_abs test data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/train.pkl power train data/interim/scaled
-      - ./src/ingest/transform.py data/interim/raw/test.pkl power test data/interim/scaled
-    deps:
-      - data/interim/raw/train.pkl
-      - data/interim/raw/test.pkl
-      - data/interim/raw/validation.pkl
+  #transform:
+  #  cmd: 
+  #    - ./src/ingest/transform.py data/interim/raw/train.pkl standard train data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/test.pkl standard test data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/train.pkl min_max train data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/test.pkl min_max test data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/train.pkl max_abs train data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/test.pkl max_abs test data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/train.pkl power train data/interim/scaled
+  #    - ./src/ingest/transform.py data/interim/raw/test.pkl power test data/interim/scaled
+  #  deps:
+  #    - data/interim/raw/train.pkl
+  #    - data/interim/raw/test.pkl
+  #    - data/interim/raw/validation.pkl

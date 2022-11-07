@@ -9,3 +9,4 @@ cython
 scikit-learn
 scipy
 seaborn
+tensorflow-macos
