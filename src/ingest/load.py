@@ -27,7 +27,8 @@ def load(src, target, type_of_data):
         'CVE-2019-5418',
         'CVE-2020-9484',
         'CVE-2020-13942',
-        'CVE-2020-23839'
+        'CVE-2020-23839',
+        'CWE-89-SQL-injection'
     ]
     
     # iterate the data
