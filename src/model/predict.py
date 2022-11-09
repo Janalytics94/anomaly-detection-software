@@ -1,6 +1,6 @@
 import dvc.api
-import os 
 # models of interest 
+import eif as iso
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.cluster import DBSCAN
@@ -30,6 +30,10 @@ def load_model(model_type, X):
         hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
         model = IsolationForest(**hyper_parameter).fit(X)
     
+    if model == 'ExtendedIsolationForest':
+        hyper_parameter = hyper_params[model_type]
+        model = iso.IForest(**hyper_parameter).fit(X)
+
     if model_type == 'LocalOutlierFactor':
         hyper_parameter = hyper_params[model_type]
         model = LocalOutlierFactor(**hyper_parameter).fit(X)

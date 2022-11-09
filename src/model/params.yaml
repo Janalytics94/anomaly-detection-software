@@ -11,6 +11,9 @@ IsolationForest:
   random_state: 42
   verbose: 0
 
+ExtendedIsolationForest:
+  ExtensionLevel: 0
+
 LocalOutlierFactor:
   n_neighbours: 20
   algorithm: 'auto'
