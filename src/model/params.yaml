@@ -12,7 +12,9 @@ IsolationForest:
   verbose: 0
 
 ExtendedIsolationForest:
-  ExtensionLevel: 0
+  ntrees: 200
+  sample_size: 256
+  ExtensionLevel: 1
 
 LocalOutlierFactor:
   n_neighbors: 20
