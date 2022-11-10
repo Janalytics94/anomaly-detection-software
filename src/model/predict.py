@@ -10,7 +10,7 @@ from sklearn.cluster import KMeans
 from sklearn import svm
 
 
-def load_model(model_type: str(), data: dict(), scenario: str()):
+def load_model(model_type: str, data: dict, scenario: str):
     
     """
     Selects chosen Model, reads in hyperparameters from params.yaml and returns the designated model fitted to data X.
@@ -25,6 +25,7 @@ def load_model(model_type: str(), data: dict(), scenario: str()):
    
     """
     X = data[scenario]
+    #contamination_rate = calculate_anomalous_rate(X)
     X = select_columns_for_modelling(X)
     hyper_params = dvc.api.params_show('../../../src/model/params.yaml')
     if model_type == 'KMEANS':
@@ -54,7 +55,7 @@ def load_model(model_type: str(), data: dict(), scenario: str()):
 
     return model
 
-def predict_(model, data, scenario):
+def predict_(model, model_type: str,  data: dict, scenario: str):
 
     """
     Predicts if data point is a anomaly, calculates score function and adds it to the dataframe.
@@ -64,7 +65,7 @@ def predict_(model, data, scenario):
     - data: data which the prediction should be made for.
 
     Returns:
-    - predictions: class predcitions, if data point is anomalous or not (0 = normal / 1 = anomaly)
+    - predictions: class predcitions, if data point is anomalous or not (0 = normal / 1 = anomaly) -> depends on the algorithm needs to be checked again
     - score: score functions for each data point
     - data: predicitions and scores added as a column to the dataframe
 
@@ -72,12 +73,13 @@ def predict_(model, data, scenario):
     X_test = data[scenario]
     X_test = select_columns_for_modelling(X_test)
     predictions = model.predict(X_test)
-        
 
-    #score = model.decision_function(data_new)
-    #data_new['anomaly']= predictions
-    #data_new['score'] = score
+    if model_type in ["IsolationForest", "LocalOutlierFactor"]: #"DBSCAN", "SVM"]:
+        scores = model.decision_function(X_test)
+    # add results to dataframe
+    X_test[model_type + "_predictions"] = predictions
+    X_test[model_type + "_scores"] = scores
     #data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==1, 0) # one is zero now and represents normal data points
     #data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
     #predictions = data_new['anomaly']
-    return predictions
+    return predictions, scores, X_test
