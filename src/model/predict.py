@@ -27,7 +27,7 @@ def load_model(model_type: str, data: dict, scenario: str):
     X = data[scenario]
     #contamination_rate = calculate_anomalous_rate(X)
     X = select_columns_for_modelling(X)
-    hyper_params = dvc.api.params_show('../../../src/model/params.yaml')
+    hyper_params = dvc.api.params_show('../../src/model/params.yaml')
     if model_type == 'KMEANS':
         hyper_parameter = hyper_params[model_type]
         model = KMeans(**hyper_parameter).fit(X) # fitted model
