@@ -1,38 +1,42 @@
 import dvc.api
+from model.helpers import *
 # models of interest 
 import eif as iso
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
 from sklearn.cluster import DBSCAN
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.cluster import KMeans
 from sklearn import svm
 
 
-def load_model(model_type, X):
+def load_model(model_type: str(), data: dict(), scenario: str()):
     
     """
     Selects chosen Model, reads in hyperparameters from params.yaml and returns the designated model fitted to data X.
 
     Params:
     - model_type: Chose a model_type from the following: IsoLationForest, LocalOutlierDetection
-    - X: trainings data
+    - data: dictionary with designated data 
+    - scenario: choose which scneario you want to examine
 
     Returns:
     - model: Fitted model
+   
     """
-
-    hyper_params = dvc.api.params_show('params.yaml')
-    if model_type == 'KNN':
+    X = data[scenario]
+    X = select_columns_for_modelling(X)
+    hyper_params = dvc.api.params_show('../../../src/model/params.yaml')
+    if model_type == 'KMEANS':
         hyper_parameter = hyper_params[model_type]
-        model = KNeighborsClassifier(**hyper_parameter).fit(X) # fitted model
+        model = KMeans(**hyper_parameter).fit(X) # fitted model
 
     if model_type == 'IsolationForest': 
         hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
         model = IsolationForest(**hyper_parameter).fit(X)
     
-    if model == 'ExtendedIsolationForest':
-        hyper_parameter = hyper_params[model_type]
-        model = iso.IForest(**hyper_parameter).fit(X)
+    #if model == 'ExtendedIsolationForest':
+    #    hyper_parameter = hyper_params[model_type]
+    #    model = iso.IForest(**hyper_parameter).fit(X)
 
     if model_type == 'LocalOutlierFactor':
         hyper_parameter = hyper_params[model_type]
@@ -48,7 +52,7 @@ def load_model(model_type, X):
 
     return model
 
-def predict_(model, data):
+def predict_(model, data, scenario):
 
     """
     Predicts if data point is a anomaly, calculates score function and adds it to the dataframe.
@@ -63,12 +67,15 @@ def predict_(model, data):
     - data: predicitions and scores added as a column to the dataframe
 
     """
-    data_new = data.copy()
-    predictions = model.predict(data_new)
-    score = model.decision_function(data_new)
-    data_new['anomaly']= predictions
-    data_new['score'] = score
-    data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==1, 0) # one is zero now and represents normal data points
-    data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
-    predictions = data_new['anomaly']
-    return predictions, score, data_new
+    X_test = data[scenario]
+    X_test = select_columns_for_modelling(X_test)
+    predictions = model.predict(X_test)
+        
+
+    #score = model.decision_function(data_new)
+    #data_new['anomaly']= predictions
+    #data_new['score'] = score
+    #data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==1, 0) # one is zero now and represents normal data points
+    #data_new['anomaly'] = data_new['anomaly'].mask(data_new['anomaly']==-1, 1) # -1 is 1 now and represents unnormal data points
+    #predictions = data_new['anomaly']
+    return predictions
