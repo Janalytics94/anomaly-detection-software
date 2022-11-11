@@ -1,6 +1,3 @@
-KMEANS:
-  n_clusters: 2
-
 IsolationForest:
   n_estimators: 100
   max_samples: 'auto'
@@ -11,11 +8,6 @@ IsolationForest:
   random_state: 42
   verbose: 0
 
-ExtendedIsolationForest:
-  ntrees: 200
-  sample_size: 256
-  ExtensionLevel: 1
-
 LocalOutlierFactor:
   n_neighbors: 20
   algorithm: 'auto'
@@ -25,12 +17,3 @@ LocalOutlierFactor:
   novelty: True
   n_jobs: -1
 
-DBSCAN:
-  eps: 0.5 
-  min_samples: 5
-  metric: 'euclidean'
-  algorithm: 'auto'
-  leaf_size: 30
-
-SVM:
-  kernel: 'sigmoid'

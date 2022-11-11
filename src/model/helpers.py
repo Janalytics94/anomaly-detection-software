@@ -69,6 +69,24 @@ def select_columns_for_modelling(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def select_columns_outlier_truncate(df: pd.DataFrame) -> pd.DataFrame:
+
+    """
+    Selects only the columns of interest for the model
+    
+    Params: 
+    - df: pd.DataFrame as input
+
+    Returns:
+    - df: pd.DataFrame
+    """
+
+
+    df = df[['cpu_usage','memory_usage', 'exploit']]#'network_received','network_send','storage_read','storage_written']]	
+
+    return df
+
+
 def create_y_values(df:pd.DataFrame) -> pd.Series:
     
     """
@@ -93,6 +111,10 @@ def calculate_anomalous_rate(df:pd.DataFrame) -> float:
     Gives percentage of anamoly data
     Usuful for contanimation_rate in hyper_params
 
+    Params:
+    - df: dataframe with data
+    Returns:
+    - percentage: float percentage rate
     """
     number_normal_recodings = df[df['exploit']!=True].shape[0]
     number_anomalous_recordings = df[df['exploit']==True].shape[0]
@@ -102,20 +124,17 @@ def calculate_anomalous_rate(df:pd.DataFrame) -> float:
 
     return percentage
 
-def classify_anomalies(df, feature):
-    df['feature_name'] = feature
-        
-    df.sort_values(by='timestamp', ascending=False)
+def outlier_truncate(df:pd.DataFrame) -> pd.DataFrame:
+    """
+    As we have skewed distributions (see EDA) we will use IQR
+    Make sure you apply it only on test data!
+    """
+    Q1=df.quantile(0.25)
+    Q3=df.quantile(0.75)
+    IQR=Q3-Q1
+    no_outliers =df[~((df<(Q1-1.5*IQR)) | (df>(Q3+1.5*IQR)))]
+    
+    return no_outliers
+ 
 
-    #Categorise anomalies as 0-no anomaly, 1- low anomaly , 2 - high anomaly
-    df['anomaly'].loc[df['anomaly'] == 1] = 0
-    df['anomaly'].loc[df['anomaly'] == -1] = 2
-    df['anomaly_class'] = df['anomaly']
-    max_anomaly_score = df['score'].loc[df['anomaly_class'] == 2].max()
-    print('Maximaler Anomaly Score for {0}: '.format(feature)) 
-    print(max_anomaly_score)
-    medium_percentile = df['score'].quantile(0.24)
-    print('Medium Percentile for {0}: '.format(feature)) 
-    print(medium_percentile)
-    df['anomaly_class'].loc[(df['score'] > max_anomaly_score) & (df['score'] <= medium_percentile)] = 1
-    return df
+  
