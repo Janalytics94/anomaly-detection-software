@@ -13,7 +13,7 @@ LocalOutlierFactor:
   algorithm: 'auto'
   leaf_size: 30
   p: 2
-  contamination: 0.1532595823344213
+  contamination: 'auto'
   novelty: True
   n_jobs: -1
 
