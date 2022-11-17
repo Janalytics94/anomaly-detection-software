@@ -1,6 +1,8 @@
 .vscode
-data
 .dvc
+data/raw/CVE-*
+data/raw/CWE-*
+data/interim/
 .dvcignore
 LID-DS
 src/model/.ipynb_checkpoints
