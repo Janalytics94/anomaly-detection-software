@@ -49,7 +49,7 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
 
 * Due to the large amount of data you need to download the data for the scenarios here: https://github.com/LID-DS/LID-DS
 * Further you can use the provided framework to record your own sceanrio and analyze it with this project. 
-* After downloading the  data please copy it data/raw
+* After downloading the  data please copy it to data/raw
 
 ### Usage
 
