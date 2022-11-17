@@ -1,7 +1,7 @@
 # Anomaly Detection for Software Vulnerabilities 
 ## An approach to evaluate a data set if it represents normal behaviour
 
-The digital companion to the designated Master Thesis
+The digital companion to the Master Thesis
 
 
 ## Summary 
