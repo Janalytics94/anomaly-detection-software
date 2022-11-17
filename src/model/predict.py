@@ -1,13 +1,10 @@
+import os
 import dvc.api
 from model.helpers import *
 # models of interest 
-import eif
-import numpy as np
 from sklearn.ensemble import IsolationForest
 from sklearn.neighbors import LocalOutlierFactor
-from sklearn.cluster import DBSCAN
-from sklearn.cluster import KMeans
-from sklearn import svm
+from pyod.models.vae import VAE
 
 
 def load_model(model_type: str, data: dict, scenario: str):
@@ -25,9 +22,13 @@ def load_model(model_type: str, data: dict, scenario: str):
    
     """
     X = data[scenario]
-    #contamination_rate = calculate_anomalous_rate(X)
+    
     X = select_columns_for_modelling(X)
-    hyper_params = dvc.api.params_show('../../../src/model/params.yaml')
+    
+    #hyper_params = dvc.api.params_show('../../../src/model/params.yaml')
+    base = os.path.dirname(__file__)
+
+    hyper_params = dvc.api.params_show(os.path.join(base, "..", "..", "src/model/params.yaml"))
 
     if model_type == 'IsolationForest': 
         hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
@@ -36,6 +37,10 @@ def load_model(model_type: str, data: dict, scenario: str):
     if model_type == 'LocalOutlierFactor':
         hyper_parameter = hyper_params[model_type]
         model = LocalOutlierFactor(**hyper_parameter).fit(X)
+    
+    if model_type == 'VariationalAutoencoder':
+        hyper_parameter = hyper_params[model_type]
+        model = VAE(**hyper_parameter).fit(X)
 
     return model
 
@@ -58,7 +63,7 @@ def predict_(model, model_type: str,  data: dict, scenario: str):
     X_test = select_columns_for_modelling(X_test)
     predictions = model.predict(X_test)
 
-    if model_type in ["IsolationForest", "LocalOutlierFactor"]:
+    if model_type in ["IsolationForest", "LocalOutlierFactor", "VariationalAutoencoders"]:
         scores = model.decision_function(X_test)
     # add results to dataframe
     X_test[model_type + "_predictions"] = predictions

@@ -17,3 +17,21 @@ LocalOutlierFactor:
   novelty: True
   n_jobs: -1
 
+VariationalAutoencoder:
+  encoder_neurons: [128, 64, 32]
+  decoder_neurons: [32, 64, 128]
+  hidden_activation: relu
+  output_activation: sigmoid
+  optimizer: adam
+  epochs: 100
+  batch_size: 32
+  dropout_rate: 0.2
+  l2_regularizer: 0.1
+  validation_size: 0.1 
+  preprocessing: True 
+  verbose: 1 
+  random_state: None 
+  contamination: 0.1 
+  gamma: 1.0 
+  capacity: 0.0
+

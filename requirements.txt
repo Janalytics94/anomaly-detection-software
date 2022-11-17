@@ -11,3 +11,4 @@ scipy
 seaborn
 tensorflow-macos
 kaleido
+dvc
