@@ -15,7 +15,22 @@ https://www.infoq.com/articles/system-behaviour-time-series-ml/
 
 ## Data 
 
-We used the Leipzig Intrusion Detection Data Set - Version 2021 (LID-DS). It consists of different scenarios. Each scenario represents a real vulnerability. The focous in our research was on the resource statistics like cpu usage and memory consumption. For more information please refer to data/raw/LID-DS-2021-Readme.md 
+We used the Leipzig Intrusion Detection Data Set - Version 2021 (LID-DS). It consists of different scenarios. Each scenario represents a real vulnerability. The focous in our research was on the following scenarios and the designated resource statistics cpu usage and memory consumption gathered in the .res files. 
+
+* CVE-2012-2122
+* CVE-2014-0160
+* CVE-2017-7529
+* CVE-2017-12635_6
+* CVE-2018-3760
+* CVE-2019-5418
+* CVE-2020-9484
+* CVE-2020-13942
+* CVE-2020-23839
+* CWE-89-SQL-injection
+
+
+For more information please refer to data/raw/LID-DS-2021-Readme.md 
+
 
 ## Project Structure
 
