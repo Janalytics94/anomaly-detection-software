@@ -22,21 +22,11 @@ stages:
       size: 396014
   load:
     cmd:
-    - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw train
-    - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw test
-    - ./src/ingest/load.py data/LID-DS-2021/CVE-2020-23839 data/interim/raw validation
+    - ./src/ingest/load.py data/raw/ data/interim/ train
+    - ./src/ingest/load.py data/raw/ data/interim/ test
+    - ./src/ingest/load.py data/raw/ data/interim/ validation
     deps:
-    - path: data/LID-DS-2021/CVE-2020-23839
-      md5: f53f4b42e0a72a6cb80497591c3046c7.dir
-      size: 1511403340
-      nfiles: 1150
-    outs:
-    - path: data/interim/raw/test.pkl
-      md5: dc8c1e5c9de61f1913c2758063d83c62
-      size: 5900988
-    - path: data/interim/raw/train.pkl
-      md5: dcad9d5031cfdd72dbf340a9a4a8b2d3
-      size: 1449931
-    - path: data/interim/raw/validation.pkl
-      md5: 16041057c78596e514026f500e5f38c0
-      size: 396014
+    - path: data/raw/
+      md5: 2336c54f848a8e76b87abd6133bec10d.dir
+      size: 60447521771
+      nfiles: 11433

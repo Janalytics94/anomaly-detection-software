@@ -40,7 +40,7 @@ We used the Leipzig Intrusion Detection Data Set - Version 2021 (LID-DS). It con
 
 * Due to the large amount of data you need to download the data for the scenarios here: https://github.com/LID-DS/LID-DS
 * Further you can use the provided framework to record your own sceanrio and analyze it with this project. 
-* After downloading the  data pleasec copy it data/raw
+* After downloading the  data please copy it data/raw
 
 ### Usage
 
