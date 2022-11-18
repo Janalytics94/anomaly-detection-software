@@ -1,7 +1,7 @@
 IsolationForest:
   n_estimators: 100
   max_samples: 'auto'
-  contamination: 'auto'
+  contamination: 0.1
   max_features: 1.0
   bootstrap: False
   n_jobs: -1 
@@ -13,13 +13,13 @@ LocalOutlierFactor:
   algorithm: 'auto'
   leaf_size: 30
   p: 2
-  contamination: 'auto'
+  contamination: 0.1
   novelty: True
   n_jobs: -1
 
 VariationalAutoencoder:
-  encoder_neurons: [128, 64, 32]
-  decoder_neurons: [32, 64, 128]
+  encoder_neurons: [1, 32]
+  decoder_neurons: [32, 1]
   hidden_activation: relu
   output_activation: sigmoid
   optimizer: adam
@@ -29,7 +29,7 @@ VariationalAutoencoder:
   l2_regularizer: 0.1
   validation_size: 0.1 
   preprocessing: True 
-  verbose: 1 
+  verbose: 0 
   random_state: None 
   contamination: 0.1 
   gamma: 1.0 

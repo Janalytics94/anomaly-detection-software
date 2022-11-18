@@ -2,8 +2,8 @@ import os
 import dvc.api
 from model.helpers import *
 # models of interest 
-from sklearn.ensemble import IsolationForest
-from sklearn.neighbors import LocalOutlierFactor
+from pyod.models import iforest
+from pyod.models import lof
 from pyod.models.vae import VAE
 
 
@@ -32,11 +32,11 @@ def load_model(model_type: str, data: dict, scenario: str):
 
     if model_type == 'IsolationForest': 
         hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
-        model = IsolationForest(**hyper_parameter).fit(X)
+        model = iforest.IForest(**hyper_parameter).fit(X)
 
     if model_type == 'LocalOutlierFactor':
         hyper_parameter = hyper_params[model_type]
-        model = LocalOutlierFactor(**hyper_parameter).fit(X)
+        model = lof.LOF(**hyper_parameter).fit(X)
     
     if model_type == 'VariationalAutoencoder':
         hyper_parameter = hyper_params[model_type]
@@ -61,12 +61,18 @@ def predict_(model, model_type: str,  data: dict, scenario: str):
     """
     X_test = data[scenario]
     X_test = select_columns_for_modelling(X_test)
+   
     predictions = model.predict(X_test)
+        
 
-    if model_type in ["IsolationForest", "LocalOutlierFactor", "VariationalAutoencoders"]:
-        scores = model.decision_function(X_test)
+    #if model_type in ["IsolationForest", "LocalOutlierFactor", "VariationalAutoencoder"]:
+    scores = model.decision_function(X_test)
     # add results to dataframe
     X_test[model_type + "_predictions"] = predictions
     X_test[model_type + "_scores"] = scores
-    
+
+   #if model_type == 'VariationalAutoencoder': #remember 0 = inliners, 1 = outliers
+   #     X_test[model_type + "_predictions"] = X_test[model_type + "_predictions"].mask(X_test[model_type + "_predictions"]==1, -1) # 1 to  -1 outliers
+   #     X_test[model_type + "_predictions"] = X_test[model_type + "_predictions"].mask(X_test[model_type + "_predictions"]==0,  1) # 0 to  1 = inliners
+ 
     return predictions, scores, X_test
