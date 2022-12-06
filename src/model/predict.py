@@ -2,12 +2,12 @@ import os
 import dvc.api
 from model.helpers import *
 # models of interest 
-from pyod.models import iforest
-from pyod.models import lof
+from pyod.models.iforest import IForest
+from pyod.models.lof import LOF
 from pyod.models.vae import VAE
 
 
-def load_model(model_type: str, data: dict, scenario: str):
+def load_model(model_type: str, train_data: dict, test_data: dict, scenario: str, contamination_rate: False):
     
     """
     Selects chosen Model, reads in hyperparameters from params.yaml and returns the designated model fitted to data X.
@@ -21,25 +21,48 @@ def load_model(model_type: str, data: dict, scenario: str):
     - model: Fitted model
    
     """
-    X = data[scenario]
-    
+    # Select scenario
+    X = train_data[scenario]
     X = select_columns_for_modelling(X)
-    
-    #hyper_params = dvc.api.params_show('../../../src/model/params.yaml')
     base = os.path.dirname(__file__)
-
+    # read in hyper_parameter
     hyper_params = dvc.api.params_show(os.path.join(base, "..", "..", "src/model/params.yaml"))
-
+   
     if model_type == 'IsolationForest': 
         hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
-        model = iforest.IForest(**hyper_parameter).fit(X)
+        if contamination_rate == True:
+             # calculate anaomalus rate
+            X_test = test_data[scenario]
+            cr = calculate_anomalous_rate(X_test)
+            if cr > 0.5:
+                cr = 0.5
+            hyper_parameter['contamination'] = cr
+            print(scenario + ":" + str(cr))
+        model = IForest(**hyper_parameter).fit(X)
 
     if model_type == 'LocalOutlierFactor':
         hyper_parameter = hyper_params[model_type]
-        model = lof.LOF(**hyper_parameter).fit(X)
+        if contamination_rate == True:
+            # calculate anaomalus rate
+            X_test = test_data[scenario]
+            cr = calculate_anomalous_rate(X_test)
+            if cr > 0.5:
+                cr = 0.5
+            hyper_parameter['contamination'] = cr
+            print(scenario + ":" + str(cr))
+        model = LOF(**hyper_parameter).fit(X)
     
     if model_type == 'VariationalAutoencoder':
         hyper_parameter = hyper_params[model_type]
+        if contamination_rate == True:
+            # calculate anaomalus rate
+            X_test = test_data[scenario]
+            cr = calculate_anomalous_rate(X_test)
+            hyper_parameter['contamination'] = cr
+            if cr > 0.5:
+                cr = 0.5
+            hyper_parameter['contamination'] = cr
+            print(scenario + ":" + str(cr))
         model = VAE(**hyper_parameter).fit(X)
 
     return model
@@ -65,14 +88,9 @@ def predict_(model, model_type: str,  data: dict, scenario: str):
     predictions = model.predict(X_test)
         
 
-    #if model_type in ["IsolationForest", "LocalOutlierFactor", "VariationalAutoencoder"]:
     scores = model.decision_function(X_test)
     # add results to dataframe
     X_test[model_type + "_predictions"] = predictions
     X_test[model_type + "_scores"] = scores
 
-   #if model_type == 'VariationalAutoencoder': #remember 0 = inliners, 1 = outliers
-   #     X_test[model_type + "_predictions"] = X_test[model_type + "_predictions"].mask(X_test[model_type + "_predictions"]==1, -1) # 1 to  -1 outliers
-   #     X_test[model_type + "_predictions"] = X_test[model_type + "_predictions"].mask(X_test[model_type + "_predictions"]==0,  1) # 0 to  1 = inliners
- 
     return predictions, scores, X_test
