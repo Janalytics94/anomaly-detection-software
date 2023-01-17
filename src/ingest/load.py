@@ -29,6 +29,7 @@ def load(src, target, type_of_data):
         'CVE-2020-13942',
         'CVE-2020-23839',
         'CWE-89-SQL-injection'
+        
     ]
     
     # iterate the data
@@ -71,15 +72,11 @@ def load(src, target, type_of_data):
                     "storage_written": [resource_stats_l[h][q].storage_written() for q in range(0,len(resource_stats_l[h]))],
                     "exploit": np.repeat(jsons[h]['exploit'], len(resource_stats_l[h])),
                     "timestamp_container_ready": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["container_ready"]["absolute"]), len(resource_stats_l[h])),
-                   # "timestamp_trick_admin":np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][0]["absolute"]) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h])),
-                   # "timestamp_execute_reverse_shell": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["exploit"][1]["absolute"]) if jsons[h]['exploit'] == True else 0, len(resource_stats_l[h])),
-                    "timestamp_warmup_end": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["warmup_end"]["absolute"]), len(resource_stats_l[h])),
+                    "timestamp_warmup_end": np.repeat(datetime.fromtimestamp(jsons[h]["time"]["warmup_end"]["absolute"]), len(resource_stats_l[h]))
             }
         
         resources = pd.DataFrame(resource_stats)
         resources = resources.transpose()
-        #resources["container_name"] = resources.index
-        #resources.set_index([resources.index]).apply(pd.Series.explode).reset_index()
         resources = resources.explode(resources.columns.tolist())
         # get container names
         resources["container_name"] = resources.index
