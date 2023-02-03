@@ -10,7 +10,9 @@ stages:
      - train.csv
      - test.csv
      - valdiation.csv
-
+  
+  preprocess:
+  
   train:
     cmd:
     deps:
@@ -21,5 +23,9 @@ stages:
 
   
   evaluate:
-    
+    cmd:
+    deps:
+    plots:
+
+
     
