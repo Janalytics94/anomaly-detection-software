@@ -1,0 +1,1 @@
+# Dockerfile which calls main.py and gives you the evaluation and the tables 

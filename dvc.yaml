@@ -1,9 +1,25 @@
 stages:
   load:
     cmd: 
-      - ./src/ingest/load.py data/raw/ data/interim/ train
-      - ./src/ingest/load.py data/raw/ data/interim/ test
-      - ./src/ingest/load.py data/raw/ data/interim/ validation
+      - ./src/ingest/load.py data/raw/ CVE-2012-2122 train data/interim/CVE-2012-2122/train.csv
+      - ./src/ingest/load.py data/raw/ CVE-2012-2122 test data/interim/CVE-2012-2122/test.csv
+      - ./src/ingest/load.py data/raw/ CVE-2012-2122 validation data/interim/CVE-2012-2122/valdiation.csv
     deps: 
      -  data/raw/
+    outs:
+     - train.csv
+     - test.csv
+     - valdiation.csv
+
+  train:
+    cmd:
+    deps:
+    outs:
+
+  test: 
+    cmd:
+
+  
+  evaluate:
+    
     
