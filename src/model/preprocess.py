@@ -2,7 +2,7 @@
 import pandas as pd
 from clize import run
 
-
+#TODO: setting up chossing scenario dynmaically, docker container, experiements, plots, scaling for LOF, CR
 def preprocess(path, data):
 
     '''
