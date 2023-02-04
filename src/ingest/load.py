@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from dataloader.dataloader_factory import dataloader_factory
+import logging
 import pandas as pd
 import numpy as np
 import os
@@ -63,13 +64,11 @@ def load(src, scenario , type, target):
     resources = resources.transpose()
     resources = resources.explode(resources.columns.tolist())
     # get container names
-    resources["container_name"] = resources.index
+    #resources["container_name"] = resources.index
     # split timestamp 
     resources["dates"] = resources["timestamp"].dt.date
     resources["times"] = resources["timestamp"].dt.time
     
-    #len(resources.timestamp.unique()) # all unique so we can use it as index 
-    resources = resources.set_index('timestamp')
     # make sure eveything has the same dtype
     resources["cpu_usage"] = resources["cpu_usage"].astype(float)
     resources["memory_usage"] = resources["memory_usage"].astype(int)
@@ -78,8 +77,22 @@ def load(src, scenario , type, target):
     resources["storage_read"] = resources["storage_read"].astype(int)
     resources["storage_written"] = resources["storage_written"].astype(int)
 
-   
-    resources.to_csv(target, sep=';')
+    _logger = logging.getLogger(__name__)
+    _logger.warning(f"Preprocessing data : {type}")
+    
+    # encode 
+    resources["exploit"] = resources["exploit"].astype(int)
+    y_true = resources["exploit"]
+    resources = resources[['cpu_usage','memory_usage']]#'network_received','network_send','storage_read','storage_written']]	
+    # Outlier Trunctuate 
+    Q1=resources.quantile(0.25)
+    Q3=resources.quantile(0.75)
+    IQR=Q3-Q1
+    df = resources[~((resources<(Q1-1.5*IQR)) | (resources>(Q3+1.5*IQR)))]
+    _logger.warning("Saving data...")
+    df.to_csv(target + '/' + type + '.csv', sep=';')
+    y_true.to_csv(target + '/y_' + type + '.csv', sep=';')
+
     return 
 
 

@@ -4,5 +4,5 @@
 - docker container for running pipeline and monitoring data, 
 - set up experiements, 
 - plots: CMS, ROC
--  scaling for LOF
+- scaling for LOF
 - choose Contamination rate dynamically
