@@ -14,14 +14,14 @@ stages:
      - validation.csv
      - y_validation.csv
   
-  #train:
-  #  cmd:
-  #   - ./src/model/train.py data/interim/ IsolationForest CVE-2012-2122 data/model/CVE-2012-2122/IsoForest.pkl
-  #  deps:
-  #  outs:
+  train:
+    cmd:
+     - ./src/model/train.py data/interim/ IsolationForest CVE-2012-2122 data/model/CVE-2012-2122/IsoForest.pkl
+    deps:
+    outs:
 
-  # test: 
-  #   cmd:
+   test: 
+    cmd:
 
   
   # evaluate:

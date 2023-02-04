@@ -4,7 +4,7 @@ import dvc.api
 from clize import run
 
 
-def predict_(model, model_type: str,  data: dict, scenario: str):
+def predict(model, model_type: str,  data: dict, scenario: str):
 
     
     X_test = data[scenario]
