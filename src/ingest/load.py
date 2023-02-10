@@ -63,6 +63,8 @@ def load(src, scenario , type, target):
     resources = pd.DataFrame(resource_stats)
     resources = resources.transpose()
     resources = resources.explode(resources.columns.tolist())
+    resources = resources.reset_index()
+    print(resources)
     # get container names
     #resources["container_name"] = resources.index
     # split timestamp 
