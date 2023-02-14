@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 import logging
 import pandas as pd
+import typer
 
 import pickle
 from clize import run
 
 
 
-def predict(src: str, scenario: str, model_type: str, target:str):
+def predict(src: str, target:str, scenario: str = typer.Argument(envvar="SCENARIO"), model_type: str = typer.Argument(envvar="MODEL_TYPE")):
 
     '''Predict anomalous or normal data'''
 

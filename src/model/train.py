@@ -4,6 +4,7 @@ import dvc.api
 import pandas as pd
 import logging
 import pickle 
+import typer
 from clize import run
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, MaxAbsScaler
@@ -12,7 +13,7 @@ from pyod.models.lof import LOF
 from pyod.models.vae import VAE
 
 
-def train(src:str, scenario:str, target:str, model_type:str, preprocess=False):
+def train(src:str,  target:str, preprocess=False, scenario: str = typer.Argument(envvar="SCENARIO"), model_type: str = typer.Argument(envvar="MODEL_TYPE")):
 
     """
     Load data, training, saved model

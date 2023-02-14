@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 import pandas as pd
 import json
+import typer
 from sklearn.metrics import (
     roc_curve, auc, confusion_matrix, 
     )
 from clize import run
 
 
-def evaluate(src_true_values: str, src_preds:str, scenario: str, target: str):
+def evaluate(src_true_values: str, src_preds:str, target: str,  scenario: typer.Argument(envvar="SCENARIO")):
 
     '''Evaluate model performance'''
     # Load predictions
@@ -47,7 +48,7 @@ def evaluate(src_true_values: str, src_preds:str, scenario: str, target: str):
     #                 ], out)
     #         out.write("\n")
     results = results.rename(columns={'y_true': "actual", "predictions": "predicted"})
-    results.to_csv(target + "/results.csv", sep=';')
+    results.to_csv(target + "/results.csv", sep=';', index=False)
 
     with open(target + "/metrics.json", "w") as output:
         json.dump({

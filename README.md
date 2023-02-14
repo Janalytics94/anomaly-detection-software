@@ -37,7 +37,7 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
     ├── src                                                   # module to load the data 
     │   ├── ingest
     │   ├── model                                             # module to call the prediction models
-    │   ├── notebooks                                         # notebooks with detailed explanation of the procedure
+    │   ├── results                                           # predicted results
     │   └── plots
     │
     ├── data
@@ -54,6 +54,8 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
 ### Usage
 
 In order to load the designated data please run *dvc repro -f* in your terminal
+
+### Set up experiments
 
 ## Contact
 

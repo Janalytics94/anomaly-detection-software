@@ -12,3 +12,4 @@ seaborn
 tensorflow-macos
 kaleido
 dvc
+typer
