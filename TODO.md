@@ -6,7 +6,7 @@ du hast gitstah gemacht ! denk dran
 - docker container for running pipeline and monitoring data, 
 - set up experiements, 
 - plots: CMS, ROC
-- scaling for LOF
+- Feature importance
 - choose Contamination rate dynamically
 
 MASTER THESIS

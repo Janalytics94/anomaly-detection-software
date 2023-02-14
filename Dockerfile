@@ -1,1 +1,4 @@
-# Dockerfile which calls main.py and gives you the evaluation and the tables 
+FROM python:3
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
