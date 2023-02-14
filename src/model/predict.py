@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-import os
 import logging
 import pandas as pd
-import dvc.api
+
 import pickle
 from clize import run
 
@@ -18,9 +17,9 @@ def predict(src: str, scenario: str, model_type: str, target:str):
     X = X.fillna(0)
     
     if model_type == 'IForest' or "LOF" or "VAE":
-        model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
+        #model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
         _logger.warning(f"Load model: {model_type}")
-        #model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))
+        model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))
 
         _logger.warning(f"Predict...: {model_type}")
         predictions = model.predict(X)

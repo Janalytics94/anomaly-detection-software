@@ -35,13 +35,13 @@ stages:
     - ./src/model/evaluate.py data/interim data/predictions CVE-2012-2122 src/results/metrics
     outs:
     - src/results/metrics/results.csv
-    plots:
-      - src/results/metrics/results.csv:
-        x: actual
-        y: predicted
-        template: confusion
-        x_label: Actual Class
-        y_label: Predicted class
+    #plots:
+    #  - src/results/metrics/results.csv:
+    #    x: actual
+    #    y: predicted
+    #    template: confusion
+    #    x_label: Actual Class
+    #    y_label: Predicted class
       
 
 

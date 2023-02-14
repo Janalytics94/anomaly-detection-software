@@ -51,7 +51,7 @@ stages:
     - ./src/model/train.py data/interim/ CVE-2012-2122 data/model/CVE-2012-2122 IForest
     deps:
     - path: data/interim
-      md5: d553c6d738792e8dc946ed5136c1ae69.dir
+      md5: 4109198ac7bd61bbbc814f55aaeeb49e.dir
       size: 71869934
       nfiles: 36
     outs:
@@ -63,10 +63,17 @@ stages:
     - ./src/model/predict.py data/interim/ CVE-2012-2122 IForest data/predictions/
     deps:
     - path: data/interim/
-      md5: d553c6d738792e8dc946ed5136c1ae69.dir
+      md5: 4109198ac7bd61bbbc814f55aaeeb49e.dir
       size: 71869934
       nfiles: 36
     outs:
     - path: data/predictions/CVE-2012-2122/predictions.csv
       md5: 0c76b6e84803d20f9e267b57d7c085b0
       size: 7084879
+  evaluate:
+    cmd:
+    - ./src/model/evaluate.py data/interim data/predictions CVE-2012-2122 src/results/metrics
+    outs:
+    - path: src/results/metrics/results.csv
+      md5: 81494d87790b62de59431328eba33add
+      size: 1310988

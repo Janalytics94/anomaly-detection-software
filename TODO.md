@@ -1,13 +1,10 @@
 # TODO:
 
-du hast gitstah gemacht ! denk dran
 
-- setting up chossing scenario dynmaically, 
-- docker container for running pipeline and monitoring data, 
-- set up experiements, 
+- setting up chossing scenario model dynmaically, 
+- set up docker container for running pipeline and monitoring data, 
+- set up experiements with contamination rate and feature importance
 - plots: CMS, ROC
-- Feature importance
-- choose Contamination rate dynamically
 
 MASTER THESIS
 
