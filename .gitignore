@@ -8,3 +8,4 @@ LID-DS
 src/model/.ipynb_checkpoints
 src/ingest/__pycache__/
 src/model/__pycache__
+TODO.md
