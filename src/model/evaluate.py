@@ -8,6 +8,8 @@ from clize import run
 
 def evaluate():
 
+    '''Evaluate model performance'''
+
 
 
 

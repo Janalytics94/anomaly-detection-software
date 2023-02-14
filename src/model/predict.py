@@ -1,23 +1,37 @@
 #!/usr/bin/env python
 import os
+import logging
+import pandas as pd
 import dvc.api
+import pickle
 from clize import run
 
 
-def predict(model, model_type: str,  data: dict, scenario: str):
 
+def predict(src: str, scenario: str, model_type: str, target:str):
+
+    '''Predict anomalous or normal data'''
+
+    _logger = logging.getLogger(__name__)
+    X = pd.read_csv(src + "/" + scenario + "/test.csv", sep=';')
+    X.pop("Unnamed: 0")
+    X = X.fillna(0)
     
-    X_test = data[scenario]
-   
-    predictions = model.predict(X_test)
-        
+    if model_type == 'IForest' or "LOF" or "VAE":
+        model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
+        _logger.warning(f"Load model: {model_type}")
+        #model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))
 
-    scores = model.decision_function(X_test)
-    # add results to dataframe
-    X_test[model_type + "_predictions"] = predictions
-    X_test[model_type + "_scores"] = scores
-
-    return predictions, scores, X_test
+        _logger.warning(f"Predict...: {model_type}")
+        predictions = model.predict(X)
+        scores = model.decision_function(X)
+        X['predictions'] = predictions
+        X['scores'] = scores
+    
+    _logger.warning(f"Saving...: {model_type}")
+    X.to_csv(target+'/'+ scenario + '/predictions.csv', sep=';')
+    
+    
 
 
 if __name__ == "__main__":

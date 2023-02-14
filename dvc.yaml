@@ -7,27 +7,29 @@ stages:
     deps: 
      -  data/raw/
     outs: 
-     - train.csv
-     - y_train.csv
-     - test.csv
-     - y_test.csv
-     - validation.csv
-     - y_validation.csv
+     - data/interim/CVE-2012-2122/train.csv
+     - data/interim/CVE-2012-2122/y_train.csv
+     - data/interim/CVE-2012-2122/test.csv
+     - data/interim/CVE-2012-2122/y_test.csv
+     - data/interim/CVE-2012-2122/validation.csv
   
-  train:
+  training:
     cmd:
-     - ./src/model/train.py data/interim/ IsolationForest CVE-2012-2122 data/model/CVE-2012-2122/IsoForest.pkl
+     - ./src/model/train.py data/interim/ CVE-2012-2122 data/model/CVE-2012-2122 IForest
     deps:
+     - data/interim
     outs:
-
-   test: 
-    cmd:
-
+     - data/model/CVE-2012-2122/IForest.pkl
   
-  # evaluate:
-  #  cmd:
-  #   deps:
-  #   plots:
+  predict:
+    cmd:
+     - ./src/model/predict.py data/interim/ CVE-2012-2122 IForest data/predictions/
+    deps:
+     - data/interim/
+    outs:
+     - data/predictions/CVE-2012-2122/predictions.csv
+
+
 
 
     

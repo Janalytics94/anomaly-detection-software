@@ -1,4 +1,4 @@
-IsolationForest:
+IForest:
   n_estimators: 100
   max_samples: 'auto'
   contamination: 0.1
@@ -8,7 +8,7 @@ IsolationForest:
   random_state: 42
   verbose: 0
 
-LocalOutlierFactor:
+LOF:
   n_neighbors: 20
   algorithm: 'auto'
   leaf_size: 30
@@ -17,7 +17,7 @@ LocalOutlierFactor:
   novelty: True
   n_jobs: -1
 
-VariationalAutoencoder:
+VAE:
   encoder_neurons: [1, 32]
   decoder_neurons: [32, 1]
   hidden_activation: relu

@@ -3,12 +3,11 @@ from dataloader.dataloader_factory import dataloader_factory
 import logging
 import pandas as pd
 import numpy as np
-import os
 from datetime import datetime
 from clize import run
     
 
-def load(src, scenario , type, target):
+def load(src:str, scenario:str , type:str, target:str):
 
     """
     Function to load .res files from selected scenario

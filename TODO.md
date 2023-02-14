@@ -1,5 +1,7 @@
 # TODO:
 
+du hast gitstah gemacht ! denk dran
+
 - setting up chossing scenario dynmaically, 
 - docker container for running pipeline and monitoring data, 
 - set up experiements, 
@@ -8,7 +10,6 @@
 - choose Contamination rate dynamically
 
 MASTER THESIS
-Git Token: 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
 
 - [ ] Make sure that the other features were not important in the data points.
 - [ ] Check Feature importance! Justify 
