@@ -13,7 +13,7 @@ from pyod.models.lof import LOF
 from pyod.models.vae import VAE
 
 
-def train(src:str,  target:str, preprocess=False, scenario: str = typer.Argument(envvar="SCENARIO"), model_type: str = typer.Argument(envvar="MODEL_TYPE")):
+def train(src:str,  target:str, scenario: str, model_type: str, preprocess=False,):
 
     """
     Load data, training, saved model

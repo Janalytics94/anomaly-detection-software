@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 import pandas as pd
 import json
-import typer
+
 from sklearn.metrics import (
     roc_curve, auc, confusion_matrix, 
     )
 from clize import run
 
 
-def evaluate(src_true_values: str, src_preds:str, target: str,  scenario: typer.Argument(envvar="SCENARIO")):
+def evaluate(src_true_values: str, src_preds:str, target: str,  scenario: str):
 
     '''Evaluate model performance'''
     # Load predictions
@@ -38,14 +38,14 @@ def evaluate(src_true_values: str, src_preds:str, target: str,  scenario: typer.
     fpr_, tpr_, _ = roc_curve(y_true, scores)
     AUC = auc(fpr_, tpr_)
     results = pd.concat([y_true["exploit"], predictions["predictions"]], axis=1, keys=['y_true', 'predictions'])
-    # with open(target + "/results.jsonl", "w") as out:
+    # with open(target + "/results.json", "w") as out:
     #     for i in range(0, len(results)):
-    #        json.dump(
+    #         json.dump(
                 
-    #                 [ {
-    #                     "actual": int(results['y_true'][i]),
-    #                     "predicted": int(results['predictions'][i])}
-    #                 ], out)
+    #                 [{
+    #                       "actual": int(results['y_true'][i]),
+    #                       "predicted": int(results['predictions'][i])}
+    #                  ], out)
     #         out.write("\n")
     results = results.rename(columns={'y_true': "actual", "predictions": "predicted"})
     results.to_csv(target + "/results.csv", sep=';', index=False)
@@ -60,9 +60,6 @@ def evaluate(src_true_values: str, src_preds:str, target: str,  scenario: typer.
             "F1" : F1,
             "AUC": AUC
         }, output, indent=4)
-       
-
-
 
     return
 

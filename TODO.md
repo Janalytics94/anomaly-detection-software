@@ -1,11 +1,7 @@
 # TODO:
 
-
-- setting up chossing scenario model dynmaically, 
-- set up docker container for running pipeline and monitoring data, 
-- set up experiements with contamination rate and feature importance
-- plots: CMS, ROC
-
+- set up docker container and text everthing, 
+- set up experiements with contamination rate regarding dvc
 MASTER THESIS
 
 - [ ] Make sure that the other features were not important in the data points.

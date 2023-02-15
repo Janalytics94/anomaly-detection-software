@@ -8,7 +8,7 @@ from clize import run
 
 
 
-def predict(src: str, target:str, scenario: str = typer.Argument(envvar="SCENARIO"), model_type: str = typer.Argument(envvar="MODEL_TYPE")):
+def predict(src: str, target:str, scenario: str, model_type: str ):
 
     '''Predict anomalous or normal data'''
 

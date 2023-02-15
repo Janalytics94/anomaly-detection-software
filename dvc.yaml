@@ -15,7 +15,7 @@ stages:
   
   training:
     cmd:
-     - ./src/model/train.py data/interim/ CVE-2012-2122 data/model/CVE-2012-2122 IForest
+     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 IForest
     deps:
      - data/interim
     outs:
@@ -23,7 +23,7 @@ stages:
   
   predict:
     cmd:
-     - ./src/model/predict.py data/interim/ CVE-2012-2122 IForest data/predictions/
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 IForest
     deps:
      - data/interim/
     outs:
@@ -32,18 +32,17 @@ stages:
 
   evaluate:
     cmd: 
-    - ./src/model/evaluate.py data/interim data/predictions CVE-2012-2122 src/results/metrics
+     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122
     outs:
-    - src/results/metrics/results.csv
-    #plots:
-    #  - src/results/metrics/results.csv:
-    #    x: actual
-    #    y: predicted
-    #    template: confusion
-    #    x_label: Actual Class
-    #    y_label: Predicted class
-      
+     - src/results/metrics/results.csv
+  
+  plot:
+    cmd:
+     - ./src/model/table.py src/results/metrics/metrics.json > src/results/plots/table.md
+    outs:
+     - src/results/plots/table.md
 
+ 
 
 
 
