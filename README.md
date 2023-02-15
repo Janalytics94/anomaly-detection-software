@@ -1,7 +1,7 @@
 # Anomaly Detection for Software Vulnerabilities 
 ## An approach to evaluate a data set if it represents normal behaviour
 
-The digital companion to the Master Thesis
+The digital companion to the Master Thesis.
 In the master branch you'll find a detailed analysis in Jupyter Notebooks.
 In the branch *develop* you'll find a ready to use pipeline which can be extended.
 
