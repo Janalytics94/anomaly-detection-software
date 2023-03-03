@@ -18,46 +18,44 @@ Viraj
 - IF algorithm will produce some different outliers in each iteration
 
 To DOS aus Meetings
-- [ ] Präsentation Ergebnisse sowohl FOKUS als auch Lessmann
+- [x] Präsentation Ergebnisse FOKUS 
+- [ ] Zitierungen ! According to 
+- [ ] Präsi Lessmann & M Grimmer
 - [ ] Aggregierten Gesamtergebnisse in Tabelle
 - [x] Correlation Plots und Treshold Tabelle und Boxplots  einfügen und beschreiben (Boxplots mit no outliers fehlt noch)
 - [ ] Anmerkungen von den Leuten, die es drüber gelesen haben mit rein nehmen 
-- [ ] Ggf. noch Tabelle für LR review machen
+- [ ] Tabelle für LR review machen!
 - [ ] DRÜBER LESEN UND GLATT ZIEHEN.
+      - [ ] Isolation Forest Formeln und noch überarbeiten
+      - [ ] LOF überarbeiten 
+      - [] VAE überarbeiten 
 - [ ] MEHR BESSERE PAPER SUCHEN
 - [x] Eigenständigkeitserklärung einfügen!!
 - [ ] Formatierung!
-- [ ] Add Contamination rate Table
+- [x] Add Contamination rate Table
 - [ ] Einheiten von cpu usage und memory consumption hinzufügen
+- [ ] Data Description
+- [ ] Structure überarbeiten
 - [ ] Bibliography bereinigen
 - [ ] Plagiat und Rechtschreibung Überprüfen
 - [ ] Wegen Zero GPT nochmal alles gegen checken
 - [ ] Hyperparaemter config in appendix 
-- [ ] Refs 1 sieht komisch aus
+- [x] Refs 1 sieht komisch aus
 - [ ] Forschungsfragen Verknüpfung besser herstellen
 - [ ] Concluson kürzen und ggf. auto encoder und so noch erklären
 - [ ] Ergebnisse mit ins Abstract
 
 
-Fragen:
-  - Interpretation False and True Positives, konkrete situation welche Daten Punkte
-- Martins Kommentare ander Methods 1.3
+
 
 Lessmann 20.12.2022
 
-- Abbildungen aus anderen Quellen z.b im LR oder Theoretical Background?
-- Konkrete Fragen zum Experimental Design, Results and Discussion, Aufbau - Ausreichend wie es aktuell ist? 
-- Abbildungen konkret in den Appendix oder alles in den Hauptteil?
-- Sollte Explorative Data Analysis mit rein?
-- Wann darf ich inoffiziell abgeben?
-
- -  Experimental design chapter für Daten anzureißen , Qualitätssmessung Unsupervised Learning,
+-  Experimental design chapter für Daten anzureißen , Qualitätssmessung Unsupervised Learning,
 - Erklärung warum unsupervised Learning, Klare Position zu supervised und unsupervised, 
 - Ergebnisse müssen stark mit Ergebnissen korrelieren, guter Link
 - KLASSISCHER ANHANG. NUR DIE DINGE DIE AUCH IN ARBEIT ANGESPROCHEN WIRD - GIT REPO 
 - WIN, TIE, LOSS, AGGREAGIEREN SZENRAIO, Algorithmen, 
-- Towards Data Science KEINE GEWÜNSCHTE Quelle - Primärliteratur! 
-- Vor Ende Januar nicht abgeben 
+- Towards Data Science KEINE GEWÜNSCHTE Quelle - Primärliteratur!  
 - LR Table ist gewünscht/Willkommen 
 
 Nützliche Blogbeiträge Master
