@@ -46,6 +46,16 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
         ├──raw                                                 # contains each scenario of the LID-DS which was considered
         ├── interim                                            # will contain the data in the desired format
 
+## Create Data
+
+Plese run the following comands in your terminal:
+
+```
+./src/ingest/load.py data/raw/ data/interim/ train
+./src/ingest/load.py data/raw/ data/interim/ test
+./src/ingest/load.py data/raw/ data/interim/ validation
+
+```
 
 ## Adding Data 
 

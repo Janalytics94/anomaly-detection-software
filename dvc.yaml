@@ -1,9 +1,0 @@
-stages:
-  load:
-    cmd: 
-      - ./src/ingest/load.py data/raw/ data/interim/ train
-      - ./src/ingest/load.py data/raw/ data/interim/ test
-      - ./src/ingest/load.py data/raw/ data/interim/ validation
-    deps: 
-     -  data/raw/
-    
