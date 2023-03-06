@@ -27,8 +27,8 @@ To DOS aus Meetings
 - [ ] Tabelle für LR review machen!
 - [ ] DRÜBER LESEN UND GLATT ZIEHEN.
       - [ ] Isolation Forest Formeln und noch überarbeiten
-      - [ ] LOF überarbeiten 
-      - [] VAE überarbeiten 
+      - [ ] LOF Formeln überarbeiten 
+      - [ ] VAE Formeln überarbeiten 
 - [ ] MEHR BESSERE PAPER SUCHEN
 - [x] Eigenständigkeitserklärung einfügen!!
 - [ ] Formatierung!
@@ -39,7 +39,7 @@ To DOS aus Meetings
 - [ ] Bibliography bereinigen
 - [ ] Plagiat und Rechtschreibung Überprüfen
 - [ ] Wegen Zero GPT nochmal alles gegen checken
-- [ ] Hyperparaemter config in appendix 
+- [x] Hyperparaemter config in appendix 
 - [x] Refs 1 sieht komisch aus
 - [ ] Forschungsfragen Verknüpfung besser herstellen
 - [ ] Concluson kürzen und ggf. auto encoder und so noch erklären
