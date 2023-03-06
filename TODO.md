@@ -31,18 +31,18 @@ To DOS aus Meetings
       - [ ] VAE Formeln überarbeiten 
 - [ ] MEHR BESSERE PAPER SUCHEN
 - [x] Eigenständigkeitserklärung einfügen!!
-- [ ] Formatierung!
+- [x] Formatierung!
 - [x] Add Contamination rate Table
-- [ ] Einheiten von cpu usage und memory consumption hinzufügen
-- [ ] Data Description
-- [ ] Structure überarbeiten
+- [x] Einheiten von cpu usage und memory consumption hinzufügen
+- [x] Data Description
+- [x] Structure überarbeiten
 - [ ] Bibliography bereinigen
 - [ ] Plagiat und Rechtschreibung Überprüfen
 - [ ] Wegen Zero GPT nochmal alles gegen checken
 - [x] Hyperparaemter config in appendix 
 - [x] Refs 1 sieht komisch aus
 - [ ] Forschungsfragen Verknüpfung besser herstellen
-- [ ] Concluson kürzen und ggf. auto encoder und so noch erklären
+- [x] Concluson kürzen und ggf. auto encoder und so noch erklären
 - [ ] Ergebnisse mit ins Abstract
 
 
