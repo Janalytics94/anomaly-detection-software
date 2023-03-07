@@ -2,16 +2,13 @@
 
 - set up docker container and text everthing, 
 - set up experiements with contamination rate regarding dvc
+
 MASTER THESIS
 
 - [ ] Make sure that the other features were not important in the data points.
 - [ ] Check Feature importance! Justify 
 - [ ] Regression Model, Confidence 
-- [ ] Print the contamination rate of Isolation Forest after running, get_params, what happens? 
-- [ ] Check pyod 0 are outliers and 1 are normal points
-- [ ] Contamiation rate „auto“, heads up, printing parameters
-- [ ] Heads up: Isolation Forest if you run it for several times the results won’t be exact the same. 
-
+- [ ] validation VAE
 Viraj
 - Work considers only 2 features but the labels will be dependent on all features. Taking only 2 features will introduce duplicates to 
 - Possible way to justify it would be to show feature importance or feature effect
@@ -19,16 +16,16 @@ Viraj
 
 To DOS aus Meetings
 - [x] Präsentation Ergebnisse FOKUS 
-- [ ] Zitierungen ! According to 
+- [x] Zitierungen ! According to 
 - [ ] Präsi Lessmann & M Grimmer
 - [ ] Aggregierten Gesamtergebnisse in Tabelle
-- [x] Correlation Plots und Treshold Tabelle und Boxplots  einfügen und beschreiben (Boxplots mit no outliers fehlt noch)
-- [ ] Anmerkungen von den Leuten, die es drüber gelesen haben mit rein nehmen 
+- [x] Correlation Plots und Treshold Tabelle und Boxplots einfügen und beschreiben (Boxplots mit no outliers fehlt noch)
+- [x] Anmerkungen von den Leuten, die es drüber gelesen haben mit rein nehmen 
 - [ ] Tabelle für LR review machen!
 - [ ] DRÜBER LESEN UND GLATT ZIEHEN.
-      - [ ] Isolation Forest Formeln und noch überarbeiten
-      - [ ] LOF Formeln überarbeiten 
-      - [ ] VAE Formeln überarbeiten 
+      - [x] Isolation Forest Formeln und noch überarbeiten
+      - [x] LOF Formeln überarbeiten 
+      - [x] VAE Formeln überarbeiten 
 - [ ] MEHR BESSERE PAPER SUCHEN
 - [x] Eigenständigkeitserklärung einfügen!!
 - [x] Formatierung!
@@ -37,11 +34,12 @@ To DOS aus Meetings
 - [x] Data Description
 - [x] Structure überarbeiten
 - [ ] Bibliography bereinigen
-- [ ] Plagiat und Rechtschreibung Überprüfen
+- [ ] Plagiat überprüfen
+- [x] Rechtschreibung Überprüfen
 - [ ] Wegen Zero GPT nochmal alles gegen checken
 - [x] Hyperparaemter config in appendix 
 - [x] Refs 1 sieht komisch aus
-- [ ] Forschungsfragen Verknüpfung besser herstellen
+- [x] Forschungsfragen Verknüpfung besser herstellen
 - [x] Concluson kürzen und ggf. auto encoder und so noch erklären
 - [ ] Ergebnisse mit ins Abstract
 
