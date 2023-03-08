@@ -15,46 +15,19 @@ Viraj
 - IF algorithm will produce some different outliers in each iteration
 
 To DOS aus Meetings
-- [x] Präsentation Ergebnisse FOKUS 
-- [x] Zitierungen ! According to 
 - [ ] Präsi Lessmann & M Grimmer
 - [ ] Aggregierten Gesamtergebnisse in Tabelle
-- [x] Correlation Plots und Treshold Tabelle und Boxplots einfügen und beschreiben (Boxplots mit no outliers fehlt noch)
-- [x] Anmerkungen von den Leuten, die es drüber gelesen haben mit rein nehmen 
 - [ ] Tabelle für LR review machen!
 - [ ] DRÜBER LESEN UND GLATT ZIEHEN.
-      - [x] Isolation Forest Formeln und noch überarbeiten
-      - [x] LOF Formeln überarbeiten 
-      - [x] VAE Formeln überarbeiten 
-- [ ] MEHR BESSERE PAPER SUCHEN
-- [x] Eigenständigkeitserklärung einfügen!!
-- [x] Formatierung!
-- [x] Add Contamination rate Table
-- [x] Einheiten von cpu usage und memory consumption hinzufügen
-- [x] Data Description
-- [x] Structure überarbeiten
+- [ ] MEHR BESSERE PAPER SUCHEN - Theoretical Background, experimental design
+- [ ] Parameter Settings ausschreiben
+- [ ] Eigenständigkeitserklärung unterschreiben!!
 - [ ] Bibliography bereinigen
 - [ ] Plagiat überprüfen
-- [x] Rechtschreibung Überprüfen
 - [ ] Wegen Zero GPT nochmal alles gegen checken
-- [x] Hyperparaemter config in appendix 
-- [x] Refs 1 sieht komisch aus
-- [x] Forschungsfragen Verknüpfung besser herstellen
-- [x] Concluson kürzen und ggf. auto encoder und so noch erklären
-- [ ] Ergebnisse mit ins Abstract
+- [ ] KLASSISCHER ANHANG. NUR DIE DINGE DIE AUCH IN ARBEIT ANGESPROCHEN WIRD - GIT REPO 
+- [ ] WIN, TIE, LOSS, AGGREAGIEREN SZENRAIO, Algorithmen, 
 
-
-
-
-Lessmann 20.12.2022
-
--  Experimental design chapter für Daten anzureißen , Qualitätssmessung Unsupervised Learning,
-- Erklärung warum unsupervised Learning, Klare Position zu supervised und unsupervised, 
-- Ergebnisse müssen stark mit Ergebnissen korrelieren, guter Link
-- KLASSISCHER ANHANG. NUR DIE DINGE DIE AUCH IN ARBEIT ANGESPROCHEN WIRD - GIT REPO 
-- WIN, TIE, LOSS, AGGREAGIEREN SZENRAIO, Algorithmen, 
-- Towards Data Science KEINE GEWÜNSCHTE Quelle - Primärliteratur!  
-- LR Table ist gewünscht/Willkommen 
 
 Nützliche Blogbeiträge Master
 
