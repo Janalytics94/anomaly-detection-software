@@ -15,19 +15,39 @@ stages:
   
   training:
     cmd:
-     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 IForest
+     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 IForest 
+     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 LOF
+     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 VAE
+     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 KMEANS
+     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 DBSCAN
     deps:
      - data/interim
     outs:
      - data/model/CVE-2012-2122/IForest.pkl
+     - data/model/CVE-2012-2122/LOF.pkl
+     - data/model/CVE-2012-2122/VAE.pkl
+     - data/model/CVE-2012-2122/KMEANS.pkl
+     - data/model/CVE-2012-2122/DBSCAN.pkl
   
   predict:
     cmd:
      - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 IForest
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF_maxabs
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF_minmax
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF_standard
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 VAE
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KMEANS
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 DBSCAN
     deps:
      - data/interim/
     outs:
-     - data/predictions/CVE-2012-2122/predictions.csv
+     - data/predictions/CVE-2012-2122/predictionsIForest.csv
+     - data/predictions/CVE-2012-2122/predictionsLOF_maxabs.csv
+     - data/predictions/CVE-2012-2122/predictionsLOF_minmax.csv
+     - data/predictions/CVE-2012-2122/predictionsLOF_standard.csv
+     - data/predictions/CVE-2012-2122/predictionsVAE.csv
+     - data/predictions/CVE-2012-2122/predictionsKMEANS.csv
+     - data/predictions/CVE-2012-2122/predictionsDBSCAN.csv
   
 
   evaluate:

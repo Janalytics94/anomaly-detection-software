@@ -1,6 +1,6 @@
 IForest:
   n_estimators: 100
-  max_samples: 'auto'
+  max_samples: auto
   contamination: 0.1
   max_features: 1.0
   bootstrap: False
@@ -10,7 +10,7 @@ IForest:
 
 LOF:
   n_neighbors: 20
-  algorithm: 'auto'
+  algorithm: auto
   leaf_size: 30
   p: 2
   contamination: 0.1
@@ -42,9 +42,8 @@ KMEANS:
 DBSCAN:
   eps: 0.5
   min_samples: 5
-  metric: 'euclidean'
-  metric_params: 
-  algorithm: 'auto'
+  metric: euclidean 
+  algorithm: auto
   leaf_size: 30
   p: 2
   n_jobs: -1
