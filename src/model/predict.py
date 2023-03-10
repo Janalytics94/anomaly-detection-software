@@ -4,6 +4,7 @@ import pandas as pd
 
 import pickle
 from clize import run
+from sklearn.cluster import DBSCAN
 
 
 
@@ -15,8 +16,9 @@ def predict(src: str, target:str, scenario: str, model_type: str ):
     X = pd.read_csv(src + "/" + scenario + "/test.csv", sep=';')
     X.pop("Unnamed: 0")
     X = X.fillna(0)
-    
-    if model_type == "IForest" or "LOF" or "VAE":
+
+    algorithms = ["IForest", "LOF", "VAE"]
+    if model_type in algorithms:
         #model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
         _logger.warning(f"Load model: {model_type}")
         model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))
@@ -27,7 +29,7 @@ def predict(src: str, target:str, scenario: str, model_type: str ):
         X['predictions'] = predictions
         X['scores'] = scores
     
-    elif model_type == "KMEANS":
+    if model_type == "KMEANS":
         _logger.warning(f"Load model: {model_type}")
         model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))
         _logger.warning(f"Predict...: {model_type}")
@@ -39,7 +41,7 @@ def predict(src: str, target:str, scenario: str, model_type: str ):
         X['scores'] = scores
 
 
-    elif model_type == "DBSCAN":
+    if model_type == "DBSCAN":
         _logger.warning(f"Load model: {model_type}")
         model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))
         _logger.warning(f"Predict...: {model_type}")
