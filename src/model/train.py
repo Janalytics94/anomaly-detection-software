@@ -3,14 +3,14 @@ import os
 import dvc.api
 import pandas as pd
 import logging
-import pickle 
-import typer
+import pickle
 from clize import run
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, MaxAbsScaler
 from pyod.models.iforest import IForest
 from pyod.models.lof import LOF
 from pyod.models.vae import VAE
+from sklearn.cluster import KMeans, DBSCAN
 
 
 def train(src:str,  target:str, scenario: str, model_type: str, preprocess=False,):
@@ -50,6 +50,15 @@ def train(src:str,  target:str, scenario: str, model_type: str, preprocess=False
     if model_type == 'VAE':
         hyper_parameter = hyper_params[model_type]
         model = VAE(**hyper_parameter).fit(X)
+
+    if model_type == "KMEANS":
+        hyper_parameter = hyper_params[model_type]
+        model = KMeans(**hyper_parameter).fit(X)
+
+    if model_type == "DBSCAN":
+        hyper_parameter = hyper_params[model_type]
+        model = DBSCAN(**hyper_parameter).fit(X)
+
     _logger.warning(f"Saving model: {model_type}")
 
     pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
