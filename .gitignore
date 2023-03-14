@@ -1,4 +1,5 @@
 __archive
+venv
 .vscode
 data/raw/CVE-*
 data/raw/CWE-*
