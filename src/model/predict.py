@@ -8,7 +8,7 @@ from clize import run
 
 
 
-def predict(src: str, target:str, scenario: str, model_type: str ):
+def predict(src: str, target:str, scenario: str, model_type: str):
 
     '''Predict anomalous or normal data'''
 
@@ -17,7 +17,7 @@ def predict(src: str, target:str, scenario: str, model_type: str ):
     X.pop("Unnamed: 0")
     X = X.fillna(0)
 
-    algorithms = ["IForest", "LOF_maxabs", "LOF_minmax", "LOF_standard", "VAE"]
+    algorithms = ["IForest", "LOF_maxabs", "LOF_minmax", "LOF_standard", "VAE", "KNN_maxabs", "KNN_minmax", "KNN_standard"]
     if model_type in algorithms:
         #model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
         _logger.warning(f"Load model: {model_type}")
@@ -29,6 +29,8 @@ def predict(src: str, target:str, scenario: str, model_type: str ):
         X['predictions'] = predictions
         X['scores'] = scores
     
+
+
     if model_type == "KMEANS":
         _logger.warning(f"Load model: {model_type}")
         model = pickle.load(open('data/model/'+ scenario + '/' + model_type + '.pkl', 'rb'))

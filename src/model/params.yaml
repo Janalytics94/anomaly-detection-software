@@ -38,12 +38,12 @@ VAE:
 
 KNN:
  contamination: 0.1
- n_neighbours: 5
+ n_neighbors: 5
  method: largest
  radius: 1.0
  algorithm: auto
  leaf_size: 30
- metric: L1
+ metric: l1
  p: 1
  n_jobs: -1
 
