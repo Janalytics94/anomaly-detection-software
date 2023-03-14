@@ -25,61 +25,48 @@ stages:
      - data/interim
     outs:
      - data/model/CVE-2012-2122/IForest.pkl
-     - data/model/CVE-2012-2122/LOF_standard.pkl
-     - data/model/CVE-2012-2122/LOF_maxabs.pkl
-     - data/model/CVE-2012-2122/LOF_minmax.pkl
+     - data/model/CVE-2012-2122/LOF.pkl
      - data/model/CVE-2012-2122/VAE.pkl
      - data/model/CVE-2012-2122/KMEANS.pkl
      - data/model/CVE-2012-2122/DBSCAN.pkl
-     - data/model/CVE-2012-2122/KNN_minmax.pkl
-     - data/model/CVE-2012-2122/KNN_standard.pkl
-     - data/model/CVE-2012-2122/KNN_maxabs.pkl
+     - data/model/CVE-2012-2122/KNN.pkl
   
   predict:
     cmd:
      - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 IForest
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF_maxabs
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF_minmax
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF_standard
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF
      - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 VAE
      - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KMEANS
      - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 DBSCAN
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KNN_maxabs
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KNN_minmax
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KNN_standard
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KNN
     deps:
      - data/interim/
     outs:
-     - data/predictions/CVE-2012-2122/predictionsIForest.csv
-     - data/predictions/CVE-2012-2122/predictionsLOF_maxabs.csv
-     - data/predictions/CVE-2012-2122/predictionsLOF_minmax.csv
-     - data/predictions/CVE-2012-2122/predictionsLOF_standard.csv
-     - data/predictions/CVE-2012-2122/predictionsVAE.csv
-     - data/predictions/CVE-2012-2122/predictionsKMEANS.csv
-     - data/predictions/CVE-2012-2122/predictionsDBSCAN.csv
-     - data/predictions/CVE-2012-2122/predictionsKNN_maxabs.csv
-     - data/predictions/CVE-2012-2122/predictionsKNN_minmax.csv
-     - data/predictions/CVE-2012-2122/predictionsKNN_standard.csv
+     - data/predictions/CVE-2012-2122/predictions_IForest.csv
+     - data/predictions/CVE-2012-2122/predictions_LOF
+     - data/predictions/CVE-2012-2122/predictions_VAE.csv
+     - data/predictions/CVE-2012-2122/predictions_KMEANS.csv
+     - data/predictions/CVE-2012-2122/predictions_DBSCAN.csv
+     - data/predictions/CVE-2012-2122/predictions_KNN.csv
 
   evaluate:
     cmd: 
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 IForest
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 LOF_maxabs
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 LOF_minmax
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 LOF_standard
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 VAE
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 KMEANS
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 DBSCAN
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 KNN_maxabs
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 KNN_minmax
-     - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122 KNN_standard
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 IForest
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 LOF
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 VAE
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 KMEANS
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 DBSCAN
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 KNN
 
     outs:
-     - src/results/metrics/results.csv
+     - data/predictions/CVE-2012-2122/metrics_IForest.json
+     - data/predictions/CVE-2012-2122/results_IForest.json
+   
   
   plot:
-    cmd:
-     - ./src/model/table.py src/results/metrics/metrics.json > src/results/plots/table.md
+    cmd: 
+     - ./src/visualize/table.py data/predictions/CVE-2012-2122/metrics_IForest.json > data/predictions/CVE-2012-2122/table_IForest.md
+     - 
     outs:
      - src/results/plots/table.md
 

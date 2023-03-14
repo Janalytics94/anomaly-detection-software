@@ -17,7 +17,7 @@ def predict(src: str, target:str, scenario: str, model_type: str):
     X.pop("Unnamed: 0")
     X = X.fillna(0)
 
-    algorithms = ["IForest", "LOF_maxabs", "LOF_minmax", "LOF_standard", "VAE", "KNN_maxabs", "KNN_minmax", "KNN_standard"]
+    algorithms = ["IForest", "LOF", "VAE", "KNN"]
     if model_type in algorithms:
         #model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
         _logger.warning(f"Load model: {model_type}")
@@ -53,7 +53,7 @@ def predict(src: str, target:str, scenario: str, model_type: str):
         X['labels'] = labels
 
     _logger.warning(f"Saving...: {model_type}")
-    X.to_csv(target+'/'+ scenario + '/predictions' + model_type + '.csv', sep=';')
+    X.to_csv(target+'/'+ scenario + '/predictions_' + model_type + '.csv', sep=';')
     
     
 
