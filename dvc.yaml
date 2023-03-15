@@ -20,50 +20,43 @@ stages:
      - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 LOF
      - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 VAE
      - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 KNN
-     - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 KMEANS
-     - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 DBSCAN
     deps:
      - data/interim
     outs:
      - data/model/CVE-2012-2122/IForest.pkl
      - data/model/CVE-2012-2122/LOF.pkl
      - data/model/CVE-2012-2122/VAE.pkl
-     - data/model/CVE-2012-2122/KMEANS.pkl
-     - data/model/CVE-2012-2122/DBSCAN.pkl
      - data/model/CVE-2012-2122/KNN.pkl
   
   predict:
     cmd:
      - ./src/model/predict.py data/interim/ data/predictions/ CVE-2021-46529 IForest
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 VAE
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KMEANS
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 DBSCAN
-     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 KNN
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2020-9484 IForest
+     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 IForest
     deps:
      - data/interim/
     outs:
      - data/predictions/CVE-2012-2122/predictions_IForest.csv
      - data/predictions/CVE-2012-2122/predictions_LOF
      - data/predictions/CVE-2012-2122/predictions_VAE.csv
-     - data/predictions/CVE-2012-2122/predictions_KMEANS.csv
-     - data/predictions/CVE-2012-2122/predictions_DBSCAN.csv
      - data/predictions/CVE-2012-2122/predictions_KNN.csv
 
   evaluate:
     cmd: 
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2021-46529 IForest
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 IForest
+     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2020-9484 IForest
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 LOF
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 VAE
-     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 KMEANS
-     - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 DBSCAN
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122 KNN
 
     outs:
      - data/predictions/CVE-2012-2122/metrics_IForest.json
      - data/predictions/CVE-2012-2122/results_IForest.json
    
+  gridsearch:
+    cmd:
+     -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2012-2122 VAE 10
   
   plot:
     cmd: 

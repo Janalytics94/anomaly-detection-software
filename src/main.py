@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
-import os 
+import os
 from clize import run
+
 
 def main():
 
-    '''Triggers Pipeline'''
+    """Triggers Pipeline"""
 
-    os.system('dvc repro')
+    os.system("dvc repro")
 
     return
 

@@ -15,16 +15,19 @@ from sklearn.cluster import KMeans, DBSCAN
 
 from clize import run
 
-def train(src:str,  target:str, scenario: str, model_type: str):
+
+def train(src: str, target: str, scenario: str, model_type: str):
 
     """
     Load data, training, saved model
     """
-    
+
     _logger = logging.getLogger(__name__)
-   
-    hyper_params = dvc.api.params_show(os.path.join(os.path.dirname(__file__), "..", "..", "src/model/params.yaml"))
-    X = pd.read_csv(src + "/" + scenario + "/train.csv", sep=';')
+
+    hyper_params = dvc.api.params_show(
+        os.path.join(os.path.dirname(__file__), "..", "..", "src/model/params.yaml")
+    )
+    X = pd.read_csv(src + "/" + scenario + "/train.csv", sep=";")
     X.pop("Unnamed: 0")
     X = X.fillna(0)
 
@@ -34,36 +37,34 @@ def train(src:str,  target:str, scenario: str, model_type: str):
     _logger.warning(f"Training: {model_type}")
     _logger.warning("##############################")
 
-    if model_type == 'IForest': 
-        hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
+    if model_type == "IForest":
+        hyper_parameter = hyper_params[model_type]  # dictionary of hyper_params
         model = IForest(**hyper_parameter).fit(X)
         _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
         _logger.warning("##############################")
-        pickle.dump(model, open(target + scenario + "/" + model_type +'.pkl', 'wb'))
-       
-    if model_type == 'LOF':
+        pickle.dump(model, open(target + scenario + "/" + model_type + ".pkl", "wb"))
+
+    if model_type == "LOF":
         hyper_parameter = hyper_params[model_type]
-        # add preprocess data 
+        # add preprocess data
         X = standard_scaler.fit_transform(X)
         model = LOF(**hyper_parameter).fit(X)
         _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
         _logger.warning("##############################")
-        pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
+        pickle.dump(model, open(target + "/" + model_type + ".pkl", "wb"))
 
-        
-    if model_type == 'KNN':
+    if model_type == "KNN":
         hyper_parameter = hyper_params[model_type]
         X = standard_scaler.fit_transform(X)
         model = KNN(**hyper_parameter).fit(X)
         _logger.warning("##############################")
         _logger.warning(f"Saving model Standard Scaling: {model_type}")
         _logger.warning("##############################")
-        pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
+        pickle.dump(model, open(target + "/" + model_type + ".pkl", "wb"))
 
-
-    if model_type == 'VAE':
+    if model_type == "VAE":
         hyper_parameter = hyper_params[model_type]
         model = VAE(**hyper_parameter).fit(X)
         _logger.warning("##############################")
@@ -71,16 +72,15 @@ def train(src:str,  target:str, scenario: str, model_type: str):
         _logger.warning("##############################")
         ##serialize model to JSON
         model_json = model.model_.to_json()
-        with open(target+ '/' + model_type +".json", "w") as json_file:
+        with open(target + "/" + model_type + ".json", "w") as json_file:
             json_file.write(model_json)
         ##serialize weights to HDF5
-        model.model_.save_weights(target+ '/' + model_type+".h5")
+        model.model_.save_weights(target + "/" + model_type + ".h5")
         model.model_ = None
-        with open(target+"/"+model_type +'.pkl', 'wb') as handle:
+        with open(target + "/" + model_type + ".pkl", "wb") as handle:
             pickle.dump(model, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-    
-    return 
+    return
 
 
 if __name__ == "__main__":
