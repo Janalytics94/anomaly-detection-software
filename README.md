@@ -40,11 +40,12 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
     │   ├── ingest
     │   ├── model                                             # module to call the prediction models
     │   ├── notebooks                                         # notebooks with detailed explanation of the procedure
-    │   └── plots
+    │   └── plots                                             # directory with plots of interest 
+    |   └── results                                           # results  
     │
     ├── data
         ├──raw                                                 # contains each scenario of the LID-DS which was considered
-        ├── interim                                            # will contain the data in the desired format
+        ├── master                                            # will contain the data in the desired format
 
 ## Create Data
 
