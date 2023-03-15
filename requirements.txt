@@ -12,4 +12,5 @@ tensorflow-macos
 kaleido
 dvc
 typer
-jsonlines
+black
+pyflakes

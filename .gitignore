@@ -1,7 +1,6 @@
 __archive
 venv
 .vscode
-data/*
 .dvcignore
 LID-DS
 src/model/.ipynb_checkpoints

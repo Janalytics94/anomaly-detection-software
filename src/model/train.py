@@ -4,7 +4,6 @@ import dvc.api
 import pandas as pd
 import logging
 import pickle
-import joblib
 
 
 from sklearn.preprocessing import StandardScaler
@@ -31,20 +30,26 @@ def train(src:str,  target:str, scenario: str, model_type: str):
 
     # Scaler
     standard_scaler = StandardScaler()
-    
+    _logger.warning("##############################")
     _logger.warning(f"Training: {model_type}")
+    _logger.warning("##############################")
+
     if model_type == 'IForest': 
         hyper_parameter = hyper_params[model_type] #dictionary of hyper_params 
         model = IForest(**hyper_parameter).fit(X)
+        _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
-        pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
+        _logger.warning("##############################")
+        pickle.dump(model, open(target + scenario + "/" + model_type +'.pkl', 'wb'))
        
     if model_type == 'LOF':
         hyper_parameter = hyper_params[model_type]
         # add preprocess data 
         X = standard_scaler.fit_transform(X)
         model = LOF(**hyper_parameter).fit(X)
+        _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
+        _logger.warning("##############################")
         pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
 
         
@@ -52,27 +57,43 @@ def train(src:str,  target:str, scenario: str, model_type: str):
         hyper_parameter = hyper_params[model_type]
         X = standard_scaler.fit_transform(X)
         model = KNN(**hyper_parameter).fit(X)
+        _logger.warning("##############################")
         _logger.warning(f"Saving model Standard Scaling: {model_type}")
+        _logger.warning("##############################")
         pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
 
 
     if model_type == 'VAE':
         hyper_parameter = hyper_params[model_type]
         model = VAE(**hyper_parameter).fit(X)
+        _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
-        joblib.dump(model, open(target+ '/' + model_type +'.h5', 'wb'))
+        _logger.warning("##############################")
+        ##serialize model to JSON
+        model_json = model.model_.to_json()
+        with open(target+ '/' + model_type +".json", "w") as json_file:
+            json_file.write(model_json)
+        ##serialize weights to HDF5
+        model.model_.save_weights(target+ '/' + model_type+".h5")
+        model.model_ = None
+        with open(target+"/"+model_type +'.pkl', 'wb') as handle:
+            pickle.dump(model, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
     if model_type == "KMEANS":
         hyper_parameter = hyper_params[model_type]
         model = KMeans(**hyper_parameter).fit(X)
+        _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
+        _logger.warning("##############################")
         pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
 
     if model_type == "DBSCAN":
         hyper_parameter = hyper_params[model_type]
         model = DBSCAN(**hyper_parameter).fit(X)
+        _logger.warning("##############################")
         _logger.warning(f"Saving model: {model_type}")
+        _logger.warning("##############################")
         pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
 
     

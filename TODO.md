@@ -11,20 +11,17 @@ BE AWARE
 - Possible way to justify it would be to show feature importance or feature effect
 - IF algorithm will produce some different outliers in each iteration
 
-- [ ] Make sure that the other features were not important in the data points.
-- [ ] Check Feature importance! Justify 
-- [ ] Regression Model, Confidence 
+- [ ] add Notebooks ins master branch
+- [ ] alles für das neue Scenario noch anpassen dann
+- [ ] add Linting in develop 
+- [ ] Check Feature importance! Justify that the other features were important in the data points, Regression Model, Confidence 
 - [ ] validation VAE
 - [ ] ENtscheidung des Algorithmus wann Anomalie ist Anomalie
-- [x] Präsi Lessmann & M Grimmer
-- [ ] Aggregierten Gesamtergebnisse in Tabelle
+- [ ] Aggregierten Gesamtergebnisse in Tabelle WIN TIE LOSS
 - [ ] Tabelle für LR review machen!
 - [ ] DRÜBER LESEN UND GLATT ZIEHEN.
-- [x] MEHR BESSERE PAPER SUCHEN - Theoretical Background, experimental design
 - [ ] Parameter Settings ausschreiben
 - [ ] Eigenständigkeitserklärung unterschreiben!!
 - [ ] Bibliography bereinigen
 - [ ] Plagiat überprüfen
 - [ ] Wegen Zero GPT nochmal alles gegen checken
-- [x] KLASSISCHER ANHANG. NUR DIE DINGE DIE AUCH IN ARBEIT ANGESPROCHEN WIRD - GIT REPO 
-- [ ] WIN, TIE, LOSS, AGGREAGIEREN SZENRAIO, Algorithmen

@@ -21,27 +21,6 @@ def load(src:str, scenario:str, type:str, target:str):
     Returns:
     pd.Dataframe for each recording
     """
-
-    
-    if (scenario == "CVE-2021-46529") & (type == "train"):
-        list_ = []
-        files = glob.glob(os.path.join(src, scenario, "normal/*.res"))
-        for file in files:
-            data = pd.read_csv(file, delimiter=',', index_col='timestamp', parse_dates=True)
-            list_.append(data)
-        RAW = {scenario: pd.concat(list_)}
-        resources = RAW[scenario]
-        resources = resources.fillna(0)
-    
-    if (scenario == "CVE-2021-46529") & (type == "test"):
-        list_ = []
-        files = glob.glob(os.path.join(src, scenario, "attack/*.res"))
-        for file in files:
-            data = pd.read_csv(file, delimiter=',', index_col='timestamp', parse_dates=True)
-            list_.append(data)
-        RAW = {scenario: pd.concat(list_)}
-        resources = RAW[scenario]
-        resources = resources.fillna(0)
     
     if scenario != "CVE-2021-46529":
         dataloader = dataloader_factory(src+'/'+scenario)
@@ -87,38 +66,86 @@ def load(src:str, scenario:str, type:str, target:str):
         resources = resources.transpose()
         resources = resources.explode(resources.columns.tolist())
         resources = resources.reset_index()
-        print(resources)
-        # get container names
-        #resources["container_name"] = resources.index
-        # split timestamp 
-        resources["dates"] = resources["timestamp"].dt.date
-        resources["times"] = resources["timestamp"].dt.time
+       
         # encode 
         resources["exploit"] = resources["exploit"].astype(int)
         y_true = resources["exploit"]
-        y_true.to_csv(target + '/y_' + type + '.csv', sep=';')
+        y_true.to_csv(target + "/" + scenario + "/y_" + type + '.csv', sep=';')
         
-    # make sure eveything has the same dtype
-    resources["cpu_usage"] = resources["cpu_usage"].astype(float)
-    resources["memory_usage"] = resources["memory_usage"].astype(int)
-    resources["network_received"] = resources["network_received"].astype(int)
-    resources["network_send"] = resources["network_send"].astype(int)
-    resources["storage_read"] = resources["storage_read"].astype(int)
-    resources["storage_written"] = resources["storage_written"].astype(int)
+        # make sure eveything has the same dtype
+        resources["cpu_usage"] = resources["cpu_usage"].astype(float)
+        resources["memory_usage"] = resources["memory_usage"].astype(int)
+        resources["network_received"] = resources["network_received"].astype(int)
+        resources["network_send"] = resources["network_send"].astype(int)
+        resources["storage_read"] = resources["storage_read"].astype(int)
+        resources["storage_written"] = resources["storage_written"].astype(int)
+    
+        
 
-    _logger = logging.getLogger(__name__)
-    _logger.warning(f"Preprocessing data : {type}")
+        _logger = logging.getLogger(__name__)
+        _logger.warning(f"Preprocessing data : {type}")
+        resources = resources[['cpu_usage','memory_usage']]#'network_received','network_send','storage_read','storage_written']]	
+        # Outlier Trunctuate 
+        Q1=resources.quantile(0.25)
+        Q3=resources.quantile(0.75)
+        IQR=Q3-Q1
+        df = resources[~((resources<(Q1-1.5*IQR)) | (resources>(Q3+1.5*IQR)))]
+        _logger.warning("Saving data...")
+        df.to_csv(target + "/" + scenario + "/" + type + '.csv', sep=';')
+
+
+    if scenario == "CVE-2021-46529": 
+        if type == "train":
+            list_ = []
+            files = glob.glob(os.path.join(src, scenario, "normal/*.res"))
+            for file in files:
+                data = pd.read_csv(file, delimiter=',', parse_dates=True)
+                list_.append(data)
+            RAW = {scenario: pd.concat(list_)}
+            resources = RAW[scenario]
+            resources = resources.fillna(0)
+            resources = resources.reset_index()
+            #resources['exploit'] = np.repeat(0, len(resources))
+
+            _logger = logging.getLogger(__name__)
+            _logger.warning(f"Preprocessing data : {type}")
+
+
+            resources = resources[['cpu_usage','memory_usage']]#'network_received','network_send','storage_read','storage_written']]	
+            # Outlier Trunctuate 
+            Q1=resources.quantile(0.25)
+            Q3=resources.quantile(0.75)
+            IQR=Q3-Q1
+            df = resources[~((resources<(Q1-1.5*IQR)) | (resources>(Q3+1.5*IQR)))]
+            _logger.warning("Saving data...")
+            df.to_csv(target + "/" + scenario + "/" + type + '.csv', sep=';')
     
-    
-    resources = resources[['cpu_usage','memory_usage']]#'network_received','network_send','storage_read','storage_written']]	
-    # Outlier Trunctuate 
-    Q1=resources.quantile(0.25)
-    Q3=resources.quantile(0.75)
-    IQR=Q3-Q1
-    df = resources[~((resources<(Q1-1.5*IQR)) | (resources>(Q3+1.5*IQR)))]
-    _logger.warning("Saving data...")
-    df.to_csv(target + '/' + type + '.csv', sep=';')
-    
+    if scenario == "CVE-2021-46529":
+        if type == "test":
+            list_ = []
+            files = glob.glob(os.path.join(src, scenario, "attack/*.res"))
+            for file in files:
+                data = pd.read_csv(file, delimiter=',', parse_dates=True)
+                list_.append(data)
+            RAW = {scenario: pd.concat(list_)}
+            resources = RAW[scenario]
+            resources = resources.fillna(0)
+            resources = resources.reset_index()
+            #resources['exploit'] = np.repeat(1, len(resources))
+
+            _logger = logging.getLogger(__name__)
+            _logger.warning(f"Preprocessing data : {type}")
+
+
+            resources = resources[['cpu_usage','memory_usage']]#'network_received','network_send','storage_read','storage_written']]	
+            # Outlier Trunctuate 
+            Q1=resources.quantile(0.25)
+            Q3=resources.quantile(0.75)
+            IQR=Q3-Q1
+            df = resources[~((resources<(Q1-1.5*IQR)) | (resources>(Q3+1.5*IQR)))]
+            _logger.warning("Saving data...")
+            df.to_csv(target + "/" + scenario + "/" + type + '.csv', sep=';')
+
 
     return 
 
