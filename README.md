@@ -57,11 +57,6 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
 * Further you can use the provided framework to record your own sceanrio and analyze it with this project. 
 * After downloading the  data please copy it to data/raw
 
-### Usage
-
-In order to load the designated data please run *dvc repro -f* in your terminal
-
-### Set up experiments
 
 ## Contact
 
