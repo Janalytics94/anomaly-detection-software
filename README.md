@@ -43,7 +43,11 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
     │
     ├── data
         ├──raw                                                 # contains each scenario of the LID-DS which was considered
-        ├── interim                                            # will contain the data in the desired format
+        ├──interim                                             # will contain the data in the desired format
+        ├── model                                              # saved models in pickle format 
+        ├── predictions                                        # results of the algorithms and performance 
+        |__ gridsearch                                         # gridsearch results
+                                       
 
 
 ## Adding Data 
