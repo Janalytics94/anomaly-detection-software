@@ -51,9 +51,9 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
 Plese run the following comands in your terminal:
 
 ```
-./src/ingest/load.py data/raw/ data/interim/ train
-./src/ingest/load.py data/raw/ data/interim/ test
-./src/ingest/load.py data/raw/ data/interim/ validation
+./src/ingest/load.py data/raw/ data/master/ train
+./src/ingest/load.py data/raw/ data/master/ test
+./src/ingest/load.py data/raw/ data/master/ validation
 
 ```
 
