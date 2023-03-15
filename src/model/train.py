@@ -79,23 +79,6 @@ def train(src:str,  target:str, scenario: str, model_type: str):
         with open(target+"/"+model_type +'.pkl', 'wb') as handle:
             pickle.dump(model, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-
-    if model_type == "KMEANS":
-        hyper_parameter = hyper_params[model_type]
-        model = KMeans(**hyper_parameter).fit(X)
-        _logger.warning("##############################")
-        _logger.warning(f"Saving model: {model_type}")
-        _logger.warning("##############################")
-        pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
-
-    if model_type == "DBSCAN":
-        hyper_parameter = hyper_params[model_type]
-        model = DBSCAN(**hyper_parameter).fit(X)
-        _logger.warning("##############################")
-        _logger.warning(f"Saving model: {model_type}")
-        _logger.warning("##############################")
-        pickle.dump(model, open(target+ '/' + model_type +'.pkl', 'wb'))
-
     
     return 
 
