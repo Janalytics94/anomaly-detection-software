@@ -35,11 +35,12 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
     │
     ├── dvc.yaml                                              # config. file for pipeline
     │
-    ├── src                                                   # module to load the data 
-    │   ├── ingest
+    ├── src                                                  
+    │   ├── ingest                                            # module to load the data 
     │   ├── model                                             # module to call the prediction models
-    │   ├── results                                           # predicted results
-    │   └── plots
+    │   ├── visualize                                         # visualize results                                      
+    │
+    |__ sut                                                   # dummy to recod mjs sceanrio with LIDS  
     │
     ├── data
         ├──raw                                                 # contains each scenario of the LID-DS which was considered
