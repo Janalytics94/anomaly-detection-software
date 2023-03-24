@@ -47,7 +47,7 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
     ├── data
         ├──raw                                                 # contains each scenario of the LID-DS which was considered
         ├── master                                            # will contain the data in the desired format
-
+        
 ## Create Data
 
 Plese run the following comands in your terminal:
