@@ -1,5 +1,8 @@
 .vscode
 .dvc
+data/model
+data/predictions
+data/gridsearch
 data/raw/CVE-*
 data/raw/CWE-*
 data/interim/
