@@ -57,6 +57,13 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
 * Further you can use the provided framework to record your own sceanrio and analyze it with this project. 
 * After downloading the  data please copy it to data/raw
 
+## Run full DVC Pipeline
+
+Please run the following command in your terminal in order to run the full pipeline
+
+'''
+dvc repro
+'''
 
 ## Do Gridsearch 
 

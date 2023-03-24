@@ -22,14 +22,15 @@ stages:
       size: 396014
   load:
     cmd:
-    - ./src/ingest/load.py data/raw/ CVE-2012-2122 train data/interim/CVE-2012-2122/
-    - ./src/ingest/load.py data/raw/ CVE-2012-2122 test data/interim/CVE-2012-2122/
-    - ./src/ingest/load.py data/raw/ CVE-2012-2122 validation data/interim/CVE-2012-2122/
+    - ./src/ingest/load.py data/raw CVE-2012-2122 train data/interim/
+    - ./src/ingest/load.py data/raw CVE-2012-2122 test data/interim/
+    - ./src/ingest/load.py data/raw CVE-2020-9484 train data/interim/
+    - ./src/ingest/load.py data/raw CVE-2020-9484 test data/interim/
     deps:
     - path: data/raw/
-      md5: 862c58e792b004f6859739f3ece2280b.dir
-      size: 60453410132
-      nfiles: 11835
+      md5: 461f41b39260e4a5c240b5794e3418e8.dir
+      size: 65641282491
+      nfiles: 53839
     outs:
     - path: data/interim/CVE-2012-2122/test.csv
       md5: 05ab83c2576d1faa769dd912668ea5aa
@@ -37,15 +38,24 @@ stages:
     - path: data/interim/CVE-2012-2122/train.csv
       md5: b403a579d857ade8c3e5639ae6512715
       size: 333343
-    - path: data/interim/CVE-2012-2122/validation.csv
-      md5: fbfd9d910c92788e952a9a4b61d75aa0
-      size: 89881
     - path: data/interim/CVE-2012-2122/y_test.csv
       md5: f916ea897a41155ce25f85dd817aff0f
       size: 1052419
     - path: data/interim/CVE-2012-2122/y_train.csv
       md5: 3eb8e8675dbb1349685848b2a1ffb6d6
       size: 66211
+    - path: data/interim/CVE-2020-9484/test.csv
+      md5: 0c8e60dcc32babd2ebb16d193c1c19e6
+      size: 1279174
+    - path: data/interim/CVE-2020-9484/train.csv
+      md5: c1f8ac031e5662117aa4babe5d9b0a98
+      size: 315071
+    - path: data/interim/CVE-2020-9484/y_test.csv
+      md5: 6ecdae6a50d8bd2697b9daf0242058e4
+      size: 291723
+    - path: data/interim/CVE-2020-9484/y_train.csv
+      md5: 7ba675627b1df01b2d1106200836775b
+      size: 65938
   training:
     cmd:
     - ./src/model/train.py data/interim/ data/model/CVE-2012-2122 CVE-2012-2122 IForest
@@ -61,26 +71,112 @@ stages:
   predict:
     cmd:
     - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 IForest
+    - ./src/model/predict.py data/interim/ data/predictions/ CVE-2012-2122 LOF
+    - ./src/model/predict.py data/interim/ data/predictions/ CVE-2020-9484 IForest
+    - ./src/model/predict.py data/interim/ data/predictions/ CVE-2020-9484 LOF
     deps:
     - path: data/interim/
-      md5: 4109198ac7bd61bbbc814f55aaeeb49e.dir
-      size: 71869934
-      nfiles: 36
+      md5: f9e79809f7281498ae3cc57e21861be4.dir
+      size: 73821840
+      nfiles: 40
     outs:
-    - path: data/predictions/CVE-2012-2122/predictions.csv
+    - path: data/predictions/CVE-2012-2122/predictions_IForest.csv
       md5: 0c76b6e84803d20f9e267b57d7c085b0
       size: 7084879
+    - path: data/predictions/CVE-2012-2122/predictions_LOF.csv
+      md5: 1b671562ea588d7534c2780ccdd97212
+      size: 6886309
+    - path: data/predictions/CVE-2020-9484/predictions_IForest.csv
+      md5: 1c196170b3915d38a244a7869053e5a9
+      size: 2150367
+    - path: data/predictions/CVE-2020-9484/predictions_LOF.csv
+      md5: b49ad3a62046a42dd3f4585b1a0feced
+      size: 2042329
   evaluate:
     cmd:
-    - ./src/model/evaluate.py data/interim data/predictions src/results/metrics CVE-2012-2122
+    - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122
+      IForest
+    - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122
+      LOF
+    - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2012-2122
+      VAE
+    - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2020-9484
+      IForest
+    - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2020-9484
+      LOF
+    - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2020-9484
+      VAE
+    deps:
+    - path: data/interim/
+      md5: f9e79809f7281498ae3cc57e21861be4.dir
+      size: 73821840
+      nfiles: 40
     outs:
-    - path: src/results/metrics/results.csv
+    - path: data/predictions/CVE-2012-2122/metrics_IForest.json
+      md5: 54aec6614007e5a9d541403db5abc902
+      size: 220
+    - path: data/predictions/CVE-2012-2122/metrics_LOF.json
+      md5: 5e8031ef440db249d19432d223209990
+      size: 170
+    - path: data/predictions/CVE-2012-2122/results_IForest.csv
       md5: 133ecdf286b8914dc3269180b28d488d
       size: 517137
+    - path: data/predictions/CVE-2020-9484/metrics_VAE.json
+      md5: bf9e18c12f0652f8596283abe5e35e3b
+      size: 223
+    - path: data/predictions/CVE-2020-9484/results_LOF.csv
+      md5: 3529638a201147ca0c579870175f3f63
+      size: 151429
+    - path: data/predictions/CVE-2020-9484/results_VAE.csv
+      md5: f3d08287867df7d84d61bda675a6043b
+      size: 151429
   plot:
     cmd:
-    - ./src/model/table.py src/results/metrics/metrics.json > src/results/plots/table.md
+    - ./src/visualize/table.py data/predictions/CVE-2012-2122/metrics_IForest.json
+      > data/predictions/CVE-2012-2122/table_IForest.md
+    - ./src/visualize/table.py data/predictions/CVE-2012-2122/metrics_LOF.json > data/predictions/CVE-2012-2122/table_LOF.md
+    - ./src/visualize/table.py data/predictions/CVE-2012-2122/metrics_VAE.json > data/predictions/CVE-2012-2122/table_VAE.md
+    - ./src/visualize/table.py data/predictions/CVE-2020-9484/metrics_IForest.json
+      > data/predictions/CVE-2020-9484/table_IForest.md
+    - ./src/visualize/table.py data/predictions/CVE-2020-9484/metrics_LOF.json > data/predictions/CVE-2020-9484/table_LOF.md
+    - ./src/visualize/table.py data/predictions/CVE-2020-9484/metrics_VAE.json > data/predictions/CVE-2020-9484/table_VAE.md
+  training_IForest_LOF:
+    cmd:
+    - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 IForest
+    - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 LOF
+    - ./src/model/train.py data/interim/ data/model/ CVE-2020-9484 IForest
+    - ./src/model/train.py data/interim/ data/model/ CVE-2020-9484 LOF
+    deps:
+    - path: data/interim
+      md5: f9e79809f7281498ae3cc57e21861be4.dir
+      size: 73821840
+      nfiles: 40
     outs:
-    - path: src/results/plots/table.md
-      md5: 4acdf76039399d88a794b2d16be36549
-      size: 340
+    - path: data/model/CVE-2012-2122/IForest.pkl
+      md5: 0eab93aa41c7671b7ac4238ccd3e2ac5
+      size: 1145995
+    - path: data/model/CVE-2012-2122/LOF.pkl
+      md5: ff6b88125b11a885dc9a46ef8e61ab2d
+      size: 2111382
+    - path: data/model/CVE-2020-9484/IForest.pkl
+      md5: bf5e81067ffa4d88ebd925283d635afc
+      size: 1194907
+    - path: data/model/CVE-2020-9484/LOF.pkl
+      md5: 4cbefca907a747caca3a5e262e0f06b5
+      size: 2102958
+  training_VAE:
+    cmd:
+    - ./src/model/train.py data/interim/ data/model/ CVE-2012-2122 VAE
+    - ./src/model/train.py data/interim/ data/model/ CVE-2020-9484 VAE
+    deps:
+    - path: data/interim
+      md5: f9e79809f7281498ae3cc57e21861be4.dir
+      size: 73821840
+      nfiles: 40
+    outs:
+    - path: data/predictions/CVE-2012-2122/predictions_VAE.csv
+      md5: 2c084022ee072e2fc32f1f3a00997493
+      size: 6928423
+    - path: data/predictions/CVE-2020-9484/predictions_VAE.csv
+      md5: 7b52b006eb6685f8be010a31c476e92a
+      size: 2075328

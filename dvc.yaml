@@ -1,10 +1,10 @@
 stages:
   load:
     cmd: 
-     - ./src/ingest/load.py data/raw/ CVE-2012-2122 train data/interim/
-     - ./src/ingest/load.py data/raw/ CVE-2012-2122 test data/interim/
-     - ./src/ingest/load.py data/raw/ CVE-2020-9484 train data/interim/
-     - ./src/ingest/load.py data/raw/ CVE-2020-9484 test data/interim/
+     - ./src/ingest/load.py data/raw CVE-2012-2122 train data/interim/
+     - ./src/ingest/load.py data/raw CVE-2012-2122 test data/interim/
+     - ./src/ingest/load.py data/raw CVE-2020-9484 train data/interim/
+     - ./src/ingest/load.py data/raw CVE-2020-9484 test data/interim/
     deps: 
      -  data/raw/
     outs: 
@@ -51,9 +51,9 @@ stages:
      - data/interim/
     outs:
      - data/predictions/CVE-2012-2122/predictions_IForest.csv
-     - data/predictions/CVE-2012-2122/predictions_LOF
+     - data/predictions/CVE-2012-2122/predictions_LOF.csv
      - data/predictions/CVE-2020-9484/predictions_IForest.csv
-     - data/predictions/CVE-2020-9484/predictions_LOF
+     - data/predictions/CVE-2020-9484/predictions_LOF.csv
     
   
   evaluate:
@@ -65,14 +65,14 @@ stages:
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2020-9484 LOF
      - ./src/model/evaluate.py data/interim data/predictions data/predictions/ CVE-2020-9484 VAE
     deps:
-     - data/inerim/
+     - data/interim/
     outs:
      - data/predictions/CVE-2012-2122/metrics_IForest.json
-     - data/predictions/CVE-2012-2122/results_IForest.json
+     - data/predictions/CVE-2012-2122/results_IForest.csv
      - data/predictions/CVE-2012-2122/metrics_LOF.json
-     - data/predictions/CVE-2020-9484/results_LOF.json
+     - data/predictions/CVE-2020-9484/results_LOF.csv
      - data/predictions/CVE-2020-9484/metrics_VAE.json
-     - data/predictions/CVE-2020-9484/results_VAE.json
+     - data/predictions/CVE-2020-9484/results_VAE.csv
     
   plot:
     cmd: 
