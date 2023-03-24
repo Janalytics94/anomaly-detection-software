@@ -1,4 +1,7 @@
 __archive
+data/interim/
+data/model/
+data/predictions/
 venv
 .vscode
 .dvcignore

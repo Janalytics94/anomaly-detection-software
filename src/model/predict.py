@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import logging
 import pandas as pd
-import os
 
 import pickle
 from clize import run
@@ -16,7 +15,7 @@ def predict(src: str, target: str, scenario: str, model_type: str):
     X.pop("Unnamed: 0")
     X = X.fillna(0)
 
-    algorithms = ["IForest", "LOF", "VAE", "KNN"]
+    algorithms = ["IForest", "LOF"]
     if model_type in algorithms:
         # model = pickle.load(open(os.path.join(os.path.dirname(__file__), "..", "..", "data/model/"+ scenario + "/" + model_type + ".pkl", "rb")))
         _logger.warning(f"Load model: {model_type}")
@@ -29,34 +28,10 @@ def predict(src: str, target: str, scenario: str, model_type: str):
         scores = model.decision_function(X)
         X["predictions"] = predictions
         X["scores"] = scores
+    
+    if model_type == "VAE":
+        print("Please use train.py")
 
-    if model_type == "KMEANS":
-        _logger.warning(f"Load model: {model_type}")
-        model = pickle.load(
-            open("data/model/" + scenario + "/" + model_type + ".pkl", "rb")
-        )
-        _logger.warning(f"Predict...: {model_type}")
-        labels = model.labels_
-        predictions = model.predict(
-            X
-        )  # Predict the closest cluster each sample in X belongs to.
-        scores = model.score(X)  # Opposite of the value of X on the K-means objective.
-        X["labels"] = labels
-        X["predictions"] = predictions
-        X["scores"] = scores
-
-    if model_type == "DBSCAN":
-        _logger.warning(f"Load model: {model_type}")
-        model = pickle.load(
-            open("data/model/" + scenario + "/" + model_type + ".pkl", "rb")
-        )
-        _logger.warning(f"Predict...: {model_type}")
-        predictions = model.fit_predict(
-            X
-        )  # Compute clusters from a data or distance matrix and predict labels.
-        labels = model.labels_
-        X["predictions"] = predictions
-        X["labels"] = labels
 
     _logger.warning(f"Saving...: {model_type}")
     X.to_csv(target + "/" + scenario + "/predictions_" + model_type + ".csv", sep=";")

@@ -40,73 +40,43 @@ def evaluate(
         true_positive + false_positive + false_negative + true_negative
     )
     F1 = 2 * (PRC * RCL) / (PRC + RCL)
+    
+    
+    # ROC AUC
+    scores = predictions["scores"]
+    fpr_, tpr_, _ = roc_curve(y_true, scores)
+    AUC = auc(fpr_, tpr_)
+    results = pd.concat(
+        [y_true["exploit"], predictions["predictions"]],
+        axis=1,
+        keys=["y_true", "predictions"],
+    )
 
-    if model_type == "DBSCAN":
-        results = pd.concat(
-            [y_true["exploit"], predictions["predictions"]],
-            axis=1,
-            keys=["y_true", "predictions"],
-        )
-        # with open(target + "/results.json", "w") as out:
-        #     for i in range(0, len(results)):
-        #         json.dump(
+    results = results.rename(
+        columns={"y_true": "actual", "predictions": "predicted"}
+    )
+    results.to_csv(
+        target + "/" + scenario + "/results_" + model_type + ".csv",
+        sep=";",
+        index=False,
+    )
 
-        #                 [{
-        #                       "actual": int(results['y_true'][i]),
-        #                       "predicted": int(results['predictions'][i])}
-        #                  ], out)
-        #         out.write("\n")
-        results = results.rename(
-            columns={"y_true": "actual", "predictions": "predicted"}
+    with open(
+        target + "/" + scenario + "/metrics_" + model_type + ".json", "w"
+    ) as output:
+        json.dump(
+            {
+                "FPR": FPR,
+                "FNR": FNR,
+                "RCL": RCL,
+                "PRC": PRC,
+                "ACC": ACC,
+                "F1": F1,
+                "AUC": AUC,
+            },
+            output,
+            indent=4,
         )
-        results.to_csv(
-            target + "/" + scenario + "/results_" + model_type + ".csv",
-            sep=";",
-            index=False,
-        )
-
-        with open(target + "/metrics_" + model_type + ".json", "w") as output:
-            json.dump(
-                {"FPR": FPR, "FNR": FNR, "RCL": RCL, "PRC": PRC, "ACC": ACC, "F1": F1},
-                output,
-                indent=4,
-            )
-    else:
-        # ROC AUC
-        scores = predictions["scores"]
-        fpr_, tpr_, _ = roc_curve(y_true, scores)
-        AUC = auc(fpr_, tpr_)
-        results = pd.concat(
-            [y_true["exploit"], predictions["predictions"]],
-            axis=1,
-            keys=["y_true", "predictions"],
-        )
-
-        results = results.rename(
-            columns={"y_true": "actual", "predictions": "predicted"}
-        )
-        results.to_csv(
-            target + "/" + scenario + "/results_" + model_type + ".csv",
-            sep=";",
-            index=False,
-        )
-
-        with open(
-            target + "/" + scenario + "/metrics_" + model_type + ".json", "w"
-        ) as output:
-            json.dump(
-                {
-                    "FPR": FPR,
-                    "FNR": FNR,
-                    "RCL": RCL,
-                    "PRC": PRC,
-                    "ACC": ACC,
-                    "F1": F1,
-                    "AUC": AUC,
-                },
-                output,
-                indent=4,
-            )
 
     return
 
