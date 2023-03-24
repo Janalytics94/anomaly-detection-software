@@ -61,22 +61,22 @@ For more information please refer to data/raw/LID-DS-2021-Readme.md
 
 Please run the following command in your terminal in order to run the full pipeline
 
-'''
+```
 dvc repro
-'''
+```
 
 ## Do Gridsearch 
 
 If you want to perform a grdisearch for each algorithm and scenario please run the following commands in your terminal
 
-'''
+```
 -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2012-2122 IForest 10
 -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2012-2122 LOF 10
 -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2012-2122 VAE 10
 -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2020-9484 IForest 10
 -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2020-9484 LOF 10
 -  ./src/model/gridsearch.py data/interim data/gridsearch CVE-2020-9484 VAE 10 
-'''
+```
 
 ## Contact
 
